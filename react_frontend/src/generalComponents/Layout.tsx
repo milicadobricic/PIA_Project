@@ -1,16 +1,17 @@
 import * as React from 'react';
-import Layout from "./generalComponents/Layout";
+import Header from "./Header";
+import Footer from "./Footer";
 
-class App extends React.Component<any, any>{
+class Layout extends React.Component<any, any>{
     public render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return(
             <div>
-                <Layout>
-                    Layout content
-                </Layout>
+                <Header/>
+                {this.props.children}
+                <Footer/>
             </div>
         )
     }
 }
 
-export default App
+export default Layout
