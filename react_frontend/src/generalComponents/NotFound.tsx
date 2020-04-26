@@ -1,14 +1,13 @@
 import * as React from 'react';
-import Layout from "./generalComponents/Layout";
 
-class App extends React.Component<any, any>{
+class NotFound extends React.Component<any, any> {
     public render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-        return(
-            <Layout>
-                {this.props.children}
-            </Layout>
+        return (
+            <div>
+                Not found!
+            </div>
         )
     }
 }
 
-export default App
+export default NotFound
