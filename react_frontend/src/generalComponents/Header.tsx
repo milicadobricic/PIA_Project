@@ -6,13 +6,30 @@ class Header extends React.Component<any, any>{
         return(
             <AppBar color="primary" position="static">
                 <Toolbar variant="dense">
-                    <Grid container direction="row">
-                        <Grid item md={6}>
-                            <Button href="/" color="inherit">
-                                Home
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    <Button href="/" color="inherit">
+                        Home
+                    </Button>
+                    <Button href="/" color="inherit">
+                        Employees
+                    </Button>
+                    <Button href="/" color="inherit">
+                        News
+                    </Button>
+                    <Button href="/" color="inherit">
+                        Bachelor studies
+                    </Button>
+                    <Button href="/" color="inherit">
+                        Master studies
+                    </Button>
+                    <Button href="/" color="inherit">
+                        Projects
+                    </Button>
+                    <Button href="/" color="inherit">
+                        Science
+                    </Button>
+                    <Button href="/" color="inherit">
+                        Contact
+                    </Button>
                 </Toolbar>
             </AppBar>
         )
