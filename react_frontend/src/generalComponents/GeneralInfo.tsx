@@ -1,5 +1,11 @@
 import * as React from "react";
 import {Box, Paper, Typography} from "@material-ui/core";
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import '../App.scss';
+import picture1 from './../images/1.jpg';
+import picture2 from './../images/2.jpg';
+import picture3 from './../images/3.jpg';
 
 class GeneralInfo extends React.Component<any, any> {
     public render() {
@@ -14,6 +20,19 @@ class GeneralInfo extends React.Component<any, any> {
                             <Typography>
                                 The Department of Computer Science and Information Technology provides education, research and projects in the area of computer hardware, software and networks.
                             </Typography>
+                        </Box>
+                        <Box pt={3}>
+                            <Carousel>
+                                <div>
+                                    <img src={picture1} className="carousel_image"/>
+                                </div>
+                                <div>
+                                    <img src={picture2} className="carousel_image"/>
+                                </div>
+                                <div>
+                                    <img src={picture3} className="carousel_image"/>
+                                </div>
+                            </Carousel>
                         </Box>
                     </Box>
                 </Paper>
