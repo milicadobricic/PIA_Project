@@ -12,8 +12,15 @@ mongoose.connect('mongodb://localhost:27017/pia_project').then(() => console.log
 
 const router = express.Router();
 
-router.route('/login').get((req, res) => {
-    res.json('Hello, World!');
+router.route('/login').post((req, res) => {
+    const username: string = req.body.username;
+    const password: string = req.body.password;
+
+    if (username === 'user' && password === 'pass') {
+        res.json('logged in');
+    } else {
+        res.json('not logged in');
+    }
 });
 
 app.use('/', router);
