@@ -1,71 +1,64 @@
-import mongoose from 'mongoose';
+import { prop } from '@typegoose/typegoose';
 
-const Schema = mongoose.Schema;
+export class EmployeeInfo {
+    @prop({ required: true })
+    public address!: string;
 
-const User = new Schema({
-    id: {
-        type: String,
-        required: true,
-    },
-    username: {
-        type: String,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    firstName: {
-        type: String,
-        default: null,
-    },
-    lastName: {
-        type: String,
-        default: null,
-    },
-    status: {
-        type: String,
-        default: null,
-    },
-    userType: {
-        type: String,
-        required: true,
-    },
-    isValidPassword: {
-        type: Boolean,
-        required: true,
-    },
-    employeeSpecific: {
-        type : {
-            address: String,
-            phoneNumber: {
-                type: String,
-                default: null,
-            },
-            webSite: {
-                type: String,
-                default: null,
-            },
-            biography: {
-                type: String,
-                default: null,
-            },
-            title: String,
-            office: String,
-            profilePicture: {
-                type: Buffer,
-                default: null,
-            },
-        },
-        default: null,
-    },
-    studentSpecific: {
-        type : {
-            idNumber: String,
-            level: String,
-        },
-        default: null,
-    },
-});
+    @prop({ default: null })
+    public phoneNumber?: string;
 
-export default mongoose.model('User', User, 'users');
+    @prop({ default: null })
+    public webSite?: string;
+
+    @prop({ default: null })
+    public biography?: string;
+
+    @prop({ required: true })
+    public title!: string;
+
+    @prop({ required: true })
+    public officeNumber!: string;
+
+    @prop({ default: null })
+    public profilePicture?: Buffer;
+}
+
+export class StudentInfo {
+    @prop({ required: true })
+    public idNumber!: string;
+
+    @prop({ required: true })
+    public level!: string;
+}
+
+export class User {
+    @prop({ required: true })
+    public id!: string;
+
+    @prop({ required: true })
+    public username!: string;
+
+    @prop({ required: true })
+    public password!: string;
+
+    @prop({ default: null })
+    public firstName?: string;
+
+    @prop({ default: null })
+    public lastName?: string;
+
+    @prop({ default: null })
+    public status?: string;
+
+    @prop({ required: true })
+    public userType!: string;
+
+    @prop({ required: true })
+    public isValidPassword!: boolean;
+
+    @prop({ default: null })
+    public employeeInfo?: EmployeeInfo;
+
+    @prop({ default: null })
+    public studentInfo?: StudentInfo;
+}
