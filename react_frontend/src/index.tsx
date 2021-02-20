@@ -7,9 +7,9 @@ import * as serviceWorker from './serviceWorker';
 import App from "./App";
 import HomePage from "./components/home/HomePage";
 import NotFound from "./components/general/NotFound";
-import ProfilePage from "./components/profile/ProfilePage";
 import PrivateRoute from "./components/general/PrivateRoute";
 import RegisterPage from "./components/register/RegisterPage";
+import CurrentUserProfilePage from "./components/profile/CurrentUserProfilePage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -18,7 +18,7 @@ const generalRoutes: Array<{path: string, component: any}> = [
 ]
 
 const loggedInRoutes: Array<{path: string, component: any}> = [
-    {path: '/profile', component: ProfilePage},
+    {path: '/profile', component: CurrentUserProfilePage},
 ]
 
 ReactDOM.render(

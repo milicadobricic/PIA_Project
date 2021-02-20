@@ -1,5 +1,4 @@
 import * as React from "react";
-import LocalStorageService from "../../services/LocalStorageService";
 import {
     Box, Paper,
     Table,
@@ -8,10 +7,15 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
+import {User} from "../../model/User";
 
-class ProfilePage extends React.Component<any, any>{
+type PageProps = {
+    user: User
+}
+
+class CurrentUserProfilePage extends React.Component<PageProps, any>{
     public render() {
-        let user = LocalStorageService.getUser();
+        let user = this.props.user;
 
         let infoList: Array<{label: string, value?: any}> = [
             {label: "Username", value: user.username},
@@ -79,4 +83,4 @@ class ProfilePage extends React.Component<any, any>{
     }
 }
 
-export default ProfilePage;
+export default CurrentUserProfilePage;
