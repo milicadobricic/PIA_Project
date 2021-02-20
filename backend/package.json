@@ -24,6 +24,7 @@
     "@types/mongoose": "^5.10.2",
     "cors": "^2.8.5",
     "express": "^4.16.3",
+    "guid-typescript": "^1.0.9",
     "mongoose": "5.10.18"
   }
 }

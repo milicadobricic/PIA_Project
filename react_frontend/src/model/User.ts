@@ -11,6 +11,7 @@ export class EmployeeInfo {
 export class StudentInfo {
     public idNumber!: string;
     public level!: string;
+    public approved!: boolean;
 }
 
 export class User {

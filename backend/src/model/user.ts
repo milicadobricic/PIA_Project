@@ -29,6 +29,9 @@ export class StudentInfo {
 
     @prop({ required: true })
     public level!: string;
+
+    @prop({required: true})
+    public approved!: boolean;
 }
 
 export class User {
