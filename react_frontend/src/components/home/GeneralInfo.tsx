@@ -2,10 +2,10 @@ import * as React from "react";
 import {Box, Typography} from "@material-ui/core";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import '../App.scss';
-import picture1 from './../images/1.jpg';
-import picture2 from './../images/2.jpg';
-import picture3 from './../images/3.jpg';
+import '../../App.scss';
+import picture1 from '../../images/1.jpg';
+import picture2 from '../../images/2.jpg';
+import picture3 from '../../images/3.jpg';
 
 class GeneralInfo extends React.Component<any, any> {
     public render() {

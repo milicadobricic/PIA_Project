@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Box, Button, Grid, Link, TextField, Typography} from "@material-ui/core";
-import ApiService from "../services/ApiService";
-import LocalStorageService from "../services/LocalStorageService";
+import ApiService from "../../services/ApiService";
+import LocalStorageService from "../../services/LocalStorageService";
 
 const padding: number = 1;
 

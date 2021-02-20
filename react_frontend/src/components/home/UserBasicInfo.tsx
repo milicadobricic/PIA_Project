@@ -1,7 +1,7 @@
 import * as React from "react";
-import {User} from "../model/User";
+import {User} from "../../model/User";
 import {Button, Grid, Typography} from "@material-ui/core";
-import LocalStorageService from "../services/LocalStorageService";
+import LocalStorageService from "../../services/LocalStorageService";
 
 type InfoProps = {
     user: User

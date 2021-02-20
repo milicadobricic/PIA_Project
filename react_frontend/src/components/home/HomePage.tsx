@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Box, Grid, Paper} from "@material-ui/core";
 import LoginForm from "./LoginForm";
 import GeneralInfo from "./GeneralInfo";
-import LocalStorageService from "../services/LocalStorageService";
+import LocalStorageService from "../../services/LocalStorageService";
 import UserBasicInfo from "./UserBasicInfo";
 
 const outerPadding: number = 3;

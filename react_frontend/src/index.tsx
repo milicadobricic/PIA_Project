@@ -5,8 +5,8 @@ import {BrowserRouter, Redirect, Route} from "react-router-dom";
 import {Switch} from "react-router";
 import * as serviceWorker from './serviceWorker';
 import App from "./App";
-import HomePage from "./generalComponents/HomePage";
-import NotFound from "./generalComponents/NotFound";
+import HomePage from "./components/home/HomePage";
+import NotFound from "./components/general/NotFound";
 
 ReactDOM.render(
     <BrowserRouter>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {AppBar, Box, Button, Toolbar} from "@material-ui/core";
-import LocalStorageService from "../services/LocalStorageService";
+import LocalStorageService from "../../services/LocalStorageService";
 
 class Header extends React.Component<any, any>{
     public onLogOut = () => {
