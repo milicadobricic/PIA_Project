@@ -9,9 +9,11 @@ import HomePage from "./components/home/HomePage";
 import NotFound from "./components/general/NotFound";
 import ProfilePage from "./components/profile/ProfilePage";
 import PrivateRoute from "./components/general/PrivateRoute";
+import RegisterPage from "./components/register/RegisterPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
+    {path: '/register', component: RegisterPage},
     {path: '/not-found', component: NotFound},
 ]
 

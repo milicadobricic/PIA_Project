@@ -36,6 +36,7 @@ class LoginForm extends React.Component<any, FormState>{
     }
 
     public render() {
+        // noinspection HtmlUnknownTarget
         return(
             <Grid container direction="column">
                 <Grid item>
@@ -69,7 +70,7 @@ class LoginForm extends React.Component<any, FormState>{
                     <Box pt={padding}>
                         <Typography>
                             Don't have an account? Register&nbsp;
-                            <Link href="/" >
+                            <Link href="/register">
                                 here
                             </Link>
                             !

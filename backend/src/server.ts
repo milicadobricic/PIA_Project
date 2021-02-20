@@ -66,7 +66,7 @@ router.route('/register').post(async (req, res) => {
 
         res.json({
             success: true,
-            message: null,
+            message: 'Applied successfully!',
         });
     } catch (e) {
         res.json({
