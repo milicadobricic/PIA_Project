@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Box, Button, Grid, Link, Paper, TextField, Typography} from "@material-ui/core";
+import {Box, Button, Grid, Link, TextField, Typography} from "@material-ui/core";
 import ApiService from "../services/ApiService";
 import LocalStorageService from "../services/LocalStorageService";
 
@@ -37,52 +37,46 @@ class LoginForm extends React.Component<any, FormState>{
 
     public render() {
         return(
-            <Box p={3}>
-                <Paper elevation={5}>
-                    <Box p={3}>
-                        <Grid container direction="column">
-                            <Grid item>
-                                <Box>
-                                    <Typography variant="h5">Log in</Typography>
-                                </Box>
-                            </Grid>
-                            <Grid item>
-                                <Box pt={padding}>
-                                    <TextField id="usernameInput" variant="outlined" size="small" label="Username" fullWidth={true} />
-                                </Box>
-                            </Grid>
-                            <Grid item>
-                                <Box pt={padding}>
-                                    <TextField id="passwordInput" variant="outlined" size="small" label="Password" type="password" fullWidth={true} />
-                                </Box>
-                            </Grid>
-                            <Grid item>
-                                <Box pt={padding}>
-                                    <Button variant="contained" fullWidth={true} onClick={this.onLogIn}>Log in</Button>
-                                </Box>
-                            </Grid>
-                            <Grid item>
-                                {
-                                    this.state.message && <Typography color="error">
-                                        {this.state.message}
-                                    </Typography>
-                                }
-                            </Grid>
-                            <Grid item>
-                                <Box pt={padding}>
-                                    <Typography>
-                                        Don't have an account? Register&nbsp;
-                                        <Link href="/" >
-                                            here
-                                        </Link>
-                                        !
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                        </Grid>
+            <Grid container direction="column">
+                <Grid item>
+                    <Box>
+                        <Typography variant="h5">Log in</Typography>
                     </Box>
-                </Paper>
-            </Box>
+                </Grid>
+                <Grid item>
+                    <Box pt={padding}>
+                        <TextField id="usernameInput" variant="outlined" size="small" label="Username" fullWidth={true} />
+                    </Box>
+                </Grid>
+                <Grid item>
+                    <Box pt={padding}>
+                        <TextField id="passwordInput" variant="outlined" size="small" label="Password" type="password" fullWidth={true} />
+                    </Box>
+                </Grid>
+                <Grid item>
+                    <Box pt={padding}>
+                        <Button variant="contained" fullWidth={true} onClick={this.onLogIn}>Log in</Button>
+                    </Box>
+                </Grid>
+                <Grid item>
+                    {
+                        this.state.message && <Typography color="error">
+                            {this.state.message}
+                        </Typography>
+                    }
+                </Grid>
+                <Grid item>
+                    <Box pt={padding}>
+                        <Typography>
+                            Don't have an account? Register&nbsp;
+                            <Link href="/" >
+                                here
+                            </Link>
+                            !
+                        </Typography>
+                    </Box>
+                </Grid>
+            </Grid>
         )
     }
 }
