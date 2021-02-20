@@ -10,10 +10,14 @@ import NotFound from "./components/general/NotFound";
 import PrivateRoute from "./components/general/PrivateRoute";
 import RegisterPage from "./components/register/RegisterPage";
 import CurrentUserProfilePage from "./components/profile/CurrentUserProfilePage";
+import EmployeesPage from "./components/employees/EmployeesPage";
+import UserProfilePage from "./components/profile/UserProfilePage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
     {path: '/register', component: RegisterPage},
+    {path: '/employees', component: EmployeesPage},
+    {path: '/user/:username', component: UserProfilePage},
     {path: '/not-found', component: NotFound},
 ]
 

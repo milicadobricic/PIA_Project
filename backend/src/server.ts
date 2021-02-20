@@ -76,5 +76,23 @@ router.route('/register').post(async (req, res) => {
     }
 });
 
+router.route('/employees').get(async (req, res) => {
+    const userModel = getModelForClass(User);
+    const employees = await userModel.find({userType: 'employee'});
+    res.json(employees);
+});
+
+router.route('/users').get(async (req, res) => {
+    const username = req.query.username;
+    const userModel = getModelForClass(User);
+    const user = await userModel.findOne({username});
+
+    if (user) {
+        user.password = undefined;
+    }
+
+    res.json(user);
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));

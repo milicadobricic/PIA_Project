@@ -17,7 +17,7 @@ class Header extends React.Component<any, any>{
                     <Button href="/" color="inherit">
                         Home
                     </Button>
-                    <Button href="/" color="inherit">
+                    <Button href="/employees" color="inherit">
                         Employees
                     </Button>
                     <Button href="/" color="inherit">
