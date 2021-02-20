@@ -51,7 +51,7 @@ class Header extends React.Component<any, any>{
                             </div>
                             :
                             <div>
-                                <Button href="/" color="inherit">
+                                <Button href="/profile" color="inherit">
                                     Profile
                                 </Button>
                                 <Button color="inherit" onClick={this.onLogOut}>

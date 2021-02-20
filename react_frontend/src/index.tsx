@@ -7,13 +7,32 @@ import * as serviceWorker from './serviceWorker';
 import App from "./App";
 import HomePage from "./components/home/HomePage";
 import NotFound from "./components/general/NotFound";
+import ProfilePage from "./components/profile/ProfilePage";
+import PrivateRoute from "./components/general/PrivateRoute";
+
+const generalRoutes: Array<{path: string, component: any}> = [
+    {path: '/', component: HomePage},
+    {path: '/not-found', component: NotFound},
+]
+
+const loggedInRoutes: Array<{path: string, component: any}> = [
+    {path: '/profile', component: ProfilePage},
+]
 
 ReactDOM.render(
     <BrowserRouter>
         <App>
             <Switch>
-                <Route exact path="/" component={HomePage}/>
-                <Route exact path="/not_found" component={NotFound}/>
+                {
+                    generalRoutes.map(route => <Route exact path={route.path} component={route.component}/>)
+                }
+                {
+                    loggedInRoutes.map(route => <Route exact path={route.path} render={(props) =>
+                        <PrivateRoute roles={["student", "employee", "admin"]}>
+                            {React.createElement(route.component, props)}
+                        </PrivateRoute>
+                    }/>)
+                }
                 <Route render={() => <Redirect to={"/not_found"}/>}/>
             </Switch>
         </App>
