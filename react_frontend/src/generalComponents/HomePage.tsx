@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Box, Grid, Paper} from "@material-ui/core";
 import LoginForm from "./LoginForm";
 import GeneralInfo from "./GeneralInfo";
+import LocalStorageService from "../services/LocalStorageService";
+import UserBasicInfo from "./UserBasicInfo";
 
 const outerPadding: number = 3;
 const elevation: number = 5;
@@ -9,6 +11,8 @@ const innerPadding: number = 3;
 
 class HomePage extends React.Component<any, any>{
     public render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+        let user = LocalStorageService.getUser();
+
         return (
             <div>
                 <Grid container direction="row">
@@ -25,7 +29,9 @@ class HomePage extends React.Component<any, any>{
                         <Box p={outerPadding}>
                             <Paper elevation={elevation}>
                                 <Box p={innerPadding}>
-                                    <LoginForm />
+                                    {
+                                        user === null ? <LoginForm /> : <UserBasicInfo user={user} />
+                                    }
                                 </Box>
                             </Paper>
                         </Box>
@@ -36,4 +42,4 @@ class HomePage extends React.Component<any, any>{
     }
 }
 
-export default HomePage
+export default HomePage;

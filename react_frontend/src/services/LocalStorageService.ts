@@ -9,6 +9,10 @@ class LocalStorageService {
     public static setUser(user: User) {
         localStorage.setItem("user", JSON.stringify(user));
     }
+
+    public static removeUser() {
+        localStorage.removeItem("user");
+    }
 }
 
 export default LocalStorageService;
