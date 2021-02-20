@@ -24,13 +24,13 @@ class GeneralInfo extends React.Component<any, any> {
                         <Box pt={3}>
                             <Carousel>
                                 <div>
-                                    <img src={picture1} className="carousel_image"/>
+                                    <img alt="ETF1" src={picture1} className="carousel_image"/>
                                 </div>
                                 <div>
-                                    <img src={picture2} className="carousel_image"/>
+                                    <img alt="ETF2" src={picture2} className="carousel_image"/>
                                 </div>
                                 <div>
-                                    <img src={picture3} className="carousel_image"/>
+                                    <img alt="ETF3" src={picture3} className="carousel_image"/>
                                 </div>
                             </Carousel>
                         </Box>
