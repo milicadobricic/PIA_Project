@@ -1,6 +1,6 @@
 import * as React from "react";
 import {
-    Box, Paper,
+    Box, Button, Paper,
     Table,
     TableBody,
     TableCell,
@@ -76,6 +76,13 @@ class CurrentUserProfilePage extends React.Component<PageProps, any>{
                                 }
                             </TableBody>
                         </Table>
+                        {
+                            user.employeeInfo && <div>
+                                <Button href="/edit-profile" variant="contained" fullWidth={true}>
+                                    Edit profile
+                                </Button>
+                            </div>
+                        }
                     </Box>
                 </Paper>
             </Box>

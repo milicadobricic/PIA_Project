@@ -1,6 +1,7 @@
 import {UserResponse} from "../model/UserResponse";
 import {RegisterResponse} from "../model/RegisterResponse";
 import {User} from "../model/User";
+import {UpdateUserResponse} from "../model/UpdateUserResponse";
 
 class ApiService {
     private static endpoint: string = "http://localhost:4000/"
@@ -9,6 +10,7 @@ class ApiService {
     private static registerEndpoint: string = ApiService.endpoint + "register";
     private static employeesEndpoint: string = ApiService.endpoint + "employees";
     private static userEndpoint: string = ApiService.endpoint + "users";
+    private static updateUserEndpoint: string = ApiService.endpoint + "update-user";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -58,6 +60,24 @@ class ApiService {
             headers: {
                 'Content-Type': 'application/json',
             },
+        });
+
+        return await response.json();
+    }
+
+    public static async updateUser(username: string, address: string, phoneNumber: string, officeNumber: string, biography: string): Promise<UpdateUserResponse> {
+        let response: Response = await fetch(ApiService.updateUserEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                address,
+                phoneNumber,
+                officeNumber,
+                biography,
+            }),
         });
 
         return await response.json();

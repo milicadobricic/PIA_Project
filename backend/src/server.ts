@@ -94,5 +94,38 @@ router.route('/users').get(async (req, res) => {
     res.json(user);
 });
 
+router.route('/update-user').post(async (req, res) => {
+    const username = req.body.username;
+    const address = req.body.address;
+    const phoneNumber = req.body.phoneNumber;
+    const officeNumber = req.body.officeNumber;
+    const biography = req.body.biography;
+
+    const userModel = getModelForClass(User);
+    const user = await userModel.findOne({username});
+
+    user.employeeInfo.address = address;
+    user.employeeInfo.phoneNumber = phoneNumber;
+    user.employeeInfo.officeNumber = officeNumber;
+    user.employeeInfo.biography = biography;
+
+    const result = await userModel.updateOne({username}, {employeeInfo: user.employeeInfo});
+
+    const updated = await userModel.findOne({username});
+    if (result.ok) {
+        res.json({
+            success: true,
+            message: 'Profile updated!',
+            user: updated,
+        });
+    } else {
+        res.json({
+            success: false,
+            message: 'An error occurred!',
+            user: null,
+        });
+    }
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));

@@ -12,6 +12,7 @@ import RegisterPage from "./components/register/RegisterPage";
 import CurrentUserProfilePage from "./components/profile/CurrentUserProfilePage";
 import EmployeesPage from "./components/employees/EmployeesPage";
 import UserProfilePage from "./components/profile/UserProfilePage";
+import EditProfilePage from "./components/profile/EditProfilePage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -23,6 +24,7 @@ const generalRoutes: Array<{path: string, component: any}> = [
 
 const loggedInRoutes: Array<{path: string, component: any}> = [
     {path: '/profile', component: CurrentUserProfilePage},
+    {path: '/edit-profile', component: EditProfilePage},
 ]
 
 ReactDOM.render(
