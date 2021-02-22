@@ -14,6 +14,7 @@ import EmployeesPage from "./components/employees/EmployeesPage";
 import UserProfilePage from "./components/profile/UserProfilePage";
 import EditProfilePage from "./components/profile/EditProfilePage";
 import DashboardPage from "./components/admin/DashboardPage";
+import AddStudentPage from "./components/admin/AddStudentPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -30,6 +31,7 @@ const loggedInRoutes: Array<{path: string, component: any}> = [
 
 const adminRoutes: Array<{path: string, component: any}> = [
     {path: '/dashboard', component: DashboardPage},
+    {path: '/register-student', component: AddStudentPage},
 ]
 
 ReactDOM.render(

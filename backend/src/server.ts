@@ -127,5 +127,64 @@ router.route('/update-user').post(async (req, res) => {
     }
 });
 
+router.route('/add-update-student').post(async (req, res) => {
+    const student: User = req.body.student;
+    const id = student.id;
+
+    const userModel = getModelForClass(User);
+    const user = await userModel.findOne({id});
+    if (user === null) {
+        student.password = Guid.create().toString();
+
+        const highest: User[] = await userModel
+            .find({userType: 'student'})
+            .find({'studentInfo.level': student.studentInfo.level})
+            .sort({'studentInfo.idNumber': -1})
+            .limit(1);
+
+        let highestIdNumber: string = '0000/0000';
+        if (highest.length > 0) {
+            highestIdNumber = highest[0].studentInfo.idNumber;
+        }
+
+        const parts = highestIdNumber.split('/');
+        const highestYear = parts[0];
+        const highestNumber = parts[1];
+
+        const year: string = new Date().getUTCFullYear().toString();
+        let num: string;
+
+        if (year === highestYear) {
+            const currentNumber = parseInt(highestNumber, 10) + 1;
+            num = ('0000' + currentNumber).slice(-4);
+        } else {
+            num = '0001';
+        }
+
+        student.studentInfo.idNumber = year + '/' + num;
+        student.username =
+            student.lastName[0].toLocaleLowerCase() +
+            student.firstName[0].toLocaleLowerCase() +
+            year.slice(-2) +
+            num +
+            student.studentInfo.level;
+
+        try {
+            await userModel.create(student);
+            res.json({
+                success: true,
+                message: `Created student with username '${student.username}' and password '${student.password}'!`,
+            });
+        } catch (e) {
+            res.json({
+                success: false,
+                message: 'Error while creating user!',
+            });
+        }
+    } else {
+        console.log('Update');
+    }
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));
