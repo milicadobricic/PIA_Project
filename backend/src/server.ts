@@ -84,8 +84,14 @@ router.route('/employees').get(async (req, res) => {
 
 router.route('/users').get(async (req, res) => {
     const username = req.query.username;
+    const id = req.query.id;
     const userModel = getModelForClass(User);
-    const user = await userModel.findOne({username});
+    let user: User = null;
+    if (username) {
+        user = await userModel.findOne({username});
+    } else if (id) {
+        user = await userModel.findOne({id});
+    }
 
     if (user) {
         user.password = undefined;
@@ -182,8 +188,41 @@ router.route('/add-update-student').post(async (req, res) => {
             });
         }
     } else {
-        console.log('Update');
+        user.firstName = student.firstName;
+        user.lastName = student.lastName;
+        user.status = student.status;
+        user.studentInfo.level = student.studentInfo.level;
+
+        const parts = user.studentInfo.idNumber.split('/');
+        const year = parts[0];
+        const num = parts[1];
+
+        user.username =
+            user.lastName[0].toLocaleLowerCase() +
+            user.firstName[0].toLocaleLowerCase() +
+            year.slice(-2) +
+            num +
+            student.studentInfo.level;
+
+        const result = await userModel.updateOne({id: user.id}, user);
+        if (result.ok) {
+            res.json({
+                success: true,
+                message: 'User updated!',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'An error occurred!',
+            });
+        }
     }
+});
+
+router.route('/students').get(async (req, res) => {
+    const userModel = getModelForClass(User);
+    const students = await userModel.find({userType: 'student'});
+    res.json(students);
 });
 
 app.use('/', router);

@@ -48,7 +48,7 @@ class DashboardPage extends React.Component<any, any> {
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>
-                                                    <Button href="/" fullWidth={true} variant="contained">
+                                                    <Button href="/students" fullWidth={true} variant="contained">
                                                         Edit student info
                                                     </Button>
                                                 </TableCell>

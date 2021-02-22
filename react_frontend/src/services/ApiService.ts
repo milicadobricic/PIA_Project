@@ -13,6 +13,7 @@ class ApiService {
     private static userEndpoint: string = ApiService.endpoint + "users";
     private static updateUserEndpoint: string = ApiService.endpoint + "update-user";
     private static addUpdateStudentEndpoint: string = ApiService.endpoint + "add-update-student";
+    private static studentsEndpoint: string = ApiService.endpoint + "students";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -56,8 +57,8 @@ class ApiService {
         return await response.json();
     }
 
-    public static async user(username: string): Promise<User> {
-        let response: Response = await fetch(ApiService.userEndpoint + "/?username=" + username, {
+    public static async user(username: string, id: string = ''): Promise<User> {
+        let response: Response = await fetch(ApiService.userEndpoint + "/?username=" + username + '&id=' + id, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -94,6 +95,17 @@ class ApiService {
             body: JSON.stringify({
                 student
             }),
+        });
+
+        return await response.json();
+    }
+
+    public static async students(): Promise<User[]> {
+        let response: Response = await fetch(ApiService.studentsEndpoint, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
         return await response.json();
