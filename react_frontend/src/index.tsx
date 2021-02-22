@@ -13,6 +13,7 @@ import CurrentUserProfilePage from "./components/profile/CurrentUserProfilePage"
 import EmployeesPage from "./components/employees/EmployeesPage";
 import UserProfilePage from "./components/profile/UserProfilePage";
 import EditProfilePage from "./components/profile/EditProfilePage";
+import DashboardPage from "./components/admin/DashboardPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -27,6 +28,10 @@ const loggedInRoutes: Array<{path: string, component: any}> = [
     {path: '/edit-profile', component: EditProfilePage},
 ]
 
+const adminRoutes: Array<{path: string, component: any}> = [
+    {path: '/dashboard', component: DashboardPage},
+]
+
 ReactDOM.render(
     <BrowserRouter>
         <App>
@@ -35,11 +40,17 @@ ReactDOM.render(
                     generalRoutes.map(route => <Route exact path={route.path} component={route.component}/>)
                 }
                 {
-                    loggedInRoutes.map(route => <Route exact path={route.path} render={(props) =>
+                    loggedInRoutes.map(route => <Route exact path={route.path} render={props =>
                         <PrivateRoute roles={["student", "employee", "admin"]}>
                             {React.createElement(route.component, props)}
                         </PrivateRoute>
                     }/>)
+                }
+                {
+                    adminRoutes.map(route => <Route exact path={route.path} render={props =>
+                        <PrivateRoute roles={["admin"]}>
+                            {React.createElement(route.component, props)}
+                        </PrivateRoute>}/>)
                 }
                 <Route render={() => <Redirect to={"/not_found"}/>}/>
             </Switch>

@@ -38,6 +38,13 @@ class Header extends React.Component<any, any>{
                     <Button href="/" color="inherit">
                         Contact
                     </Button>
+                    {
+                        user?.userType === "admin" && <div>
+                            <Button href="/dashboard" color="inherit">
+                                Dashboard
+                            </Button>
+                        </div>
+                    }
                     <Box flexGrow={1}/>
                     {
                         user === null ?
