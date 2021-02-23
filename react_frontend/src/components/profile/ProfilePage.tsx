@@ -8,14 +8,16 @@ import {
     Typography
 } from "@material-ui/core";
 import {User} from "../../model/User";
+import LocalStorageService from "../../services/LocalStorageService";
 
 type PageProps = {
     user: User
 }
 
-class CurrentUserProfilePage extends React.Component<PageProps, any>{
+class ProfilePage extends React.Component<PageProps, any>{
     public render() {
         let user = this.props.user;
+        let currentUser = LocalStorageService.getUser();
 
         let infoList: Array<{label: string, value?: any}> = [
             {label: "Username", value: user.username},
@@ -77,7 +79,7 @@ class CurrentUserProfilePage extends React.Component<PageProps, any>{
                             </TableBody>
                         </Table>
                         {
-                            user.employeeInfo && <div>
+                            user.employeeInfo && user.id === currentUser?.id && <div>
                                 <Button href="/edit-profile" variant="contained" fullWidth={true}>
                                     Edit profile
                                 </Button>
@@ -90,4 +92,4 @@ class CurrentUserProfilePage extends React.Component<PageProps, any>{
     }
 }
 
-export default CurrentUserProfilePage;
+export default ProfilePage;
