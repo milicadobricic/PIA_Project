@@ -133,6 +133,20 @@ router.route('/update-user').post(async (req, res) => {
     }
 });
 
+router.route('/delete-student').post(async (req, res) => {
+    const student: User = req.body.student;
+    const id = student.id;
+
+    const userModel = getModelForClass(User);
+
+    const result = await userModel.deleteOne({id});
+    if (result.ok) {
+        res.json(true);
+    } else {
+        res.json(false);
+    }
+});
+
 router.route('/add-update-student').post(async (req, res) => {
     const student: User = req.body.student;
     const id = student.id;

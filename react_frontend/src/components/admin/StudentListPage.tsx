@@ -1,11 +1,24 @@
 import * as React from "react";
 import {User} from "../../model/User";
 import {Alert} from "@material-ui/lab";
-import {Link, Table, TableBody, TableCell, TableRow, Typography} from "@material-ui/core";
+import {
+    Button,
+    Dialog, DialogActions,
+    DialogContent,
+    IconButton,
+    Link,
+    Table,
+    TableBody,
+    TableCell,
+    TableRow,
+    Typography
+} from "@material-ui/core";
 import ApiService from "../../services/ApiService";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 type PageState = {
-    students?: User[]
+    students?: User[],
+    studentToDelete?: User,
 }
 
 class StudentListPage extends React.Component<any, PageState> {
@@ -31,6 +44,28 @@ class StudentListPage extends React.Component<any, PageState> {
             default: return "Unknown";
         }
     }
+
+    public onDelete = (student: User) => {
+        this.setState({
+            studentToDelete: student,
+        })
+    };
+
+    public onConfirm = async () => {
+        let studentToDelete = this.state.studentToDelete;
+
+        this.setState({
+            students: undefined,
+            studentToDelete: undefined,
+        })
+
+        await ApiService.deleteStudent(studentToDelete as User);
+
+        let students = await ApiService.students();
+        this.setState({
+            students
+        })
+    };
 
     public render() {
         if (this.state.students === undefined) {
@@ -61,17 +96,29 @@ class StudentListPage extends React.Component<any, PageState> {
                             this.state.students.map(student =>
                                 <TableRow>
                                     <TableCell>
-                                        <Link href={"/student/" + student.id}>
-                                            <Typography align="center">
+                                        <Typography align="center">
+                                            <IconButton size="small" onClick={() => this.onDelete(student)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                            <Link href={"/student/" + student.id}>
                                                 {student.firstName} {student.lastName}, {student.studentInfo?.idNumber} - {StudentListPage.getHumanReadableLevel(student.studentInfo?.level)}
-                                            </Typography>
-                                        </Link>
+                                            </Link>
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
                             )
                         }
                     </TableBody>
                 </Table>
+                <Dialog open={!!this.state.studentToDelete} onClose={() => this.setState({studentToDelete: undefined})}>
+                    <DialogContent>
+                        Are you sure you want to delete student {this.state.studentToDelete?.firstName} {this.state.studentToDelete?.lastName}, {this.state.studentToDelete?.studentInfo?.idNumber} - {StudentListPage.getHumanReadableLevel(this.state.studentToDelete?.studentInfo?.level)}?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" color="primary" onClick={this.onConfirm}>Confirm</Button>
+                        <Button variant="contained" onClick={() => this.setState({studentToDelete: undefined})}>Cancel</Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         )
     }

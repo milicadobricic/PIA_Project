@@ -49,14 +49,7 @@ class DashboardPage extends React.Component<any, any> {
                                             <TableRow>
                                                 <TableCell>
                                                     <Button href="/students" fullWidth={true} variant="contained">
-                                                        Edit student info
-                                                    </Button>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>
-                                                    <Button href="/" fullWidth={true} variant="contained">
-                                                        Remove student
+                                                        Edit/Remove student
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>
