@@ -16,7 +16,7 @@ import {
 import ApiService from "../../services/ApiService";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {ThumbUp} from "@material-ui/icons";
-import {AddUpdateApproveStudentResponse} from "../../model/AddUpdateApproveStudentResponse";
+import {AddUpdateApproveResponse} from "../../model/AddUpdateApproveResponse";
 
 type PageState = {
     students?: User[],
@@ -90,7 +90,7 @@ class StudentListPage extends React.Component<any, PageState> {
             studentToApprove: undefined,
         })
 
-        let response: AddUpdateApproveStudentResponse = await ApiService.approveStudent(studentToApprove as User);
+        let response: AddUpdateApproveResponse = await ApiService.approveStudent(studentToApprove as User);
 
         let students = await ApiService.students();
         this.setState({

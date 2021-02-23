@@ -280,6 +280,16 @@ router.route('/add-update-employee').post(async (req, res) => {
     const userModel = getModelForClass(User);
     const user = await userModel.findOne({id});
     if (user === null) {
+        const withUsername = await userModel.findOne({username: employee.username});
+        if (withUsername) {
+            res.json({
+                success: false,
+                message: 'Username already exists, can\'t create new user!',
+            });
+
+            return;
+        }
+
         try {
             employee.password = Guid.create().toString();
             employee.isValidPassword = false;

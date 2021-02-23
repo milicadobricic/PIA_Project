@@ -2,7 +2,7 @@ import {UserResponse} from "../model/UserResponse";
 import {RegisterResponse} from "../model/RegisterResponse";
 import {User} from "../model/User";
 import {UpdateUserResponse} from "../model/UpdateUserResponse";
-import {AddUpdateApproveStudentResponse} from "../model/AddUpdateApproveStudentResponse";
+import {AddUpdateApproveResponse} from "../model/AddUpdateApproveResponse";
 
 class ApiService {
     private static endpoint: string = "http://localhost:4000/"
@@ -16,6 +16,7 @@ class ApiService {
     private static studentsEndpoint: string = ApiService.endpoint + "students";
     private static deleteStudentEndpoint: string = ApiService.endpoint + "delete-student";
     private static approveStudentEndpoint: string = ApiService.endpoint + "approve-student";
+    private static addUpdateEmployeeEndpoint: string = ApiService.endpoint + "add-update-employee";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -88,7 +89,7 @@ class ApiService {
         return await response.json();
     }
 
-    public static async addUpdateStudent(student: User): Promise<AddUpdateApproveStudentResponse> {
+    public static async addUpdateStudent(student: User): Promise<AddUpdateApproveResponse> {
         let response: Response = await fetch(ApiService.addUpdateStudentEndpoint, {
             method: "POST",
             headers: {
@@ -127,7 +128,7 @@ class ApiService {
         return await response.json();
     }
 
-    public static async approveStudent(student: User): Promise<AddUpdateApproveStudentResponse> {
+    public static async approveStudent(student: User): Promise<AddUpdateApproveResponse> {
         let response: Response = await fetch(ApiService.approveStudentEndpoint, {
             method: "POST",
             headers: {
@@ -135,6 +136,20 @@ class ApiService {
             },
             body: JSON.stringify({
                 student
+            }),
+        });
+
+        return await response.json();
+    }
+
+    public static async addUpdateEmployee(employee: User): Promise<AddUpdateApproveResponse> {
+        let response: Response = await fetch(ApiService.addUpdateEmployeeEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                employee
             }),
         });
 
