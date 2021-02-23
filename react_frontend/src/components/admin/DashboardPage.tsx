@@ -41,15 +41,8 @@ class DashboardPage extends React.Component<any, any> {
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>
-                                                    <Button href="/approve-students" fullWidth={true} variant="contained">
-                                                        Approve register requests
-                                                    </Button>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>
                                                     <Button href="/students" fullWidth={true} variant="contained">
-                                                        Edit/Remove student
+                                                        Edit/Remove/Approve student
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>
