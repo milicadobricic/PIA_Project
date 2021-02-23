@@ -15,10 +15,12 @@ import {
 } from "@material-ui/core";
 import ApiService from "../../services/ApiService";
 import DeleteIcon from '@material-ui/icons/Delete';
+import {ThumbUp} from "@material-ui/icons";
 
 type PageState = {
     students?: User[],
     studentToDelete?: User,
+    studentToApprove?: User
 }
 
 class StudentListPage extends React.Component<any, PageState> {
@@ -51,7 +53,7 @@ class StudentListPage extends React.Component<any, PageState> {
         })
     };
 
-    public onConfirm = async () => {
+    public onDeleteConfirm = async () => {
         let studentToDelete = this.state.studentToDelete;
 
         this.setState({
@@ -60,6 +62,28 @@ class StudentListPage extends React.Component<any, PageState> {
         })
 
         await ApiService.deleteStudent(studentToDelete as User);
+
+        let students = await ApiService.students();
+        this.setState({
+            students
+        })
+    };
+
+    public onApprove = (student: User) => {
+        this.setState({
+            studentToApprove: student,
+        })
+    };
+
+    public onApproveConfirm = async () => {
+        let studentToApprove = this.state.studentToApprove;
+
+        this.setState({
+            students: undefined,
+            studentToApprove: undefined,
+        })
+
+        await ApiService.approveStudent(studentToApprove as User);
 
         let students = await ApiService.students();
         this.setState({
@@ -97,6 +121,12 @@ class StudentListPage extends React.Component<any, PageState> {
                                 <TableRow>
                                     <TableCell>
                                         <Typography align="center">
+                                            {
+                                                !student.studentInfo?.approved &&
+                                                <IconButton size="small" onClick={() => this.onApprove(student)}>
+                                                    <ThumbUp/>
+                                                </IconButton>
+                                            }
                                             <IconButton size="small" onClick={() => this.onDelete(student)}>
                                                 <DeleteIcon />
                                             </IconButton>
@@ -115,8 +145,17 @@ class StudentListPage extends React.Component<any, PageState> {
                         Are you sure you want to delete student {this.state.studentToDelete?.firstName} {this.state.studentToDelete?.lastName}, {this.state.studentToDelete?.studentInfo?.idNumber} - {StudentListPage.getHumanReadableLevel(this.state.studentToDelete?.studentInfo?.level)}?
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" color="primary" onClick={this.onConfirm}>Confirm</Button>
+                        <Button variant="contained" color="primary" onClick={this.onDeleteConfirm}>Confirm</Button>
                         <Button variant="contained" onClick={() => this.setState({studentToDelete: undefined})}>Cancel</Button>
+                    </DialogActions>
+                </Dialog>
+                <Dialog open={!!this.state.studentToApprove} onClose={() => this.setState({studentToApprove: undefined})}>
+                    <DialogContent>
+                        Are you sure you want to approve student {this.state.studentToApprove?.firstName} {this.state.studentToApprove?.lastName}, {StudentListPage.getHumanReadableLevel(this.state.studentToApprove?.studentInfo?.level)}?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" color="primary" onClick={this.onApproveConfirm}>Confirm</Button>
+                        <Button variant="contained" onClick={() => this.setState({studentToApprove: undefined})}>Cancel</Button>
                     </DialogActions>
                 </Dialog>
             </div>

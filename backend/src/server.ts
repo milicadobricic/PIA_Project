@@ -15,6 +15,47 @@ mongoose.connect('mongodb://localhost:27017/pia_project').then(() => console.log
 
 const router = express.Router();
 
+async function generateIdNumber(level: string) {
+    const userModel = getModelForClass(User);
+    const highest: User[] = await userModel
+        .find({userType: 'student'})
+        .find({'studentInfo.level': level})
+        .sort({'studentInfo.idNumber': -1})
+        .limit(1);
+
+    let highestIdNumber: string = '0000/0000';
+    if (highest.length > 0) {
+        highestIdNumber = highest[0].studentInfo.idNumber;
+    }
+
+    const parts = highestIdNumber.split('/');
+    const highestYear = parts[0];
+    const highestNumber = parts[1];
+
+    const year: string = new Date().getUTCFullYear().toString();
+    let num: string;
+
+    if (year === highestYear) {
+        const currentNumber = parseInt(highestNumber, 10) + 1;
+        num = ('0000' + currentNumber).slice(-4);
+    } else {
+        num = '0001';
+    }
+
+    return year + '/' + num;
+}
+
+async function generateStudentInfo(student: User) {
+    student.password = Guid.create().toString();
+    student.studentInfo.idNumber = await generateIdNumber(student.studentInfo.level);
+    student.username =
+        student.lastName[0].toLocaleLowerCase() +
+        student.firstName[0].toLocaleLowerCase() +
+        student.studentInfo.idNumber.split('/')[0].slice(-2) +
+        student.studentInfo.idNumber.split('/')[1] +
+        student.studentInfo.level;
+}
+
 router.route('/login').post(async (req, res) => {
     const username: string = req.body.username;
     const password: string = req.body.password;
@@ -53,7 +94,7 @@ router.route('/register').post(async (req, res) => {
         userType: 'student',
         isValidPassword: false,
         studentInfo: {
-            idNumber: '_',
+            idNumber: '0000/0000',
             level: studyLevel,
             approved: false,
         },
@@ -147,6 +188,32 @@ router.route('/delete-student').post(async (req, res) => {
     }
 });
 
+router.route('/approve-student').post(async (req, res) => {
+    const student: User = req.body.student;
+    const id = student.id;
+
+    const userModel = getModelForClass(User);
+    const user = await userModel.findOne({id});
+
+    if (user) {
+        await generateStudentInfo(user);
+        user.studentInfo.approved = true;
+
+        const result = await userModel.updateOne({id: user.id}, user);
+        if (result.ok) {
+            res.json({
+                success: true,
+                message: 'User updated!',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'An error occurred!',
+            });
+        }
+    }
+});
+
 router.route('/add-update-student').post(async (req, res) => {
     const student: User = req.body.student;
     const id = student.id;
@@ -154,40 +221,7 @@ router.route('/add-update-student').post(async (req, res) => {
     const userModel = getModelForClass(User);
     const user = await userModel.findOne({id});
     if (user === null) {
-        student.password = Guid.create().toString();
-
-        const highest: User[] = await userModel
-            .find({userType: 'student'})
-            .find({'studentInfo.level': student.studentInfo.level})
-            .sort({'studentInfo.idNumber': -1})
-            .limit(1);
-
-        let highestIdNumber: string = '0000/0000';
-        if (highest.length > 0) {
-            highestIdNumber = highest[0].studentInfo.idNumber;
-        }
-
-        const parts = highestIdNumber.split('/');
-        const highestYear = parts[0];
-        const highestNumber = parts[1];
-
-        const year: string = new Date().getUTCFullYear().toString();
-        let num: string;
-
-        if (year === highestYear) {
-            const currentNumber = parseInt(highestNumber, 10) + 1;
-            num = ('0000' + currentNumber).slice(-4);
-        } else {
-            num = '0001';
-        }
-
-        student.studentInfo.idNumber = year + '/' + num;
-        student.username =
-            student.lastName[0].toLocaleLowerCase() +
-            student.firstName[0].toLocaleLowerCase() +
-            year.slice(-2) +
-            num +
-            student.studentInfo.level;
+        await generateStudentInfo(student);
 
         try {
             await userModel.create(student);

@@ -15,6 +15,7 @@ class ApiService {
     private static addUpdateStudentEndpoint: string = ApiService.endpoint + "add-update-student";
     private static studentsEndpoint: string = ApiService.endpoint + "students";
     private static deleteStudentEndpoint: string = ApiService.endpoint + "delete-student";
+    private static approveStudentEndpoint: string = ApiService.endpoint + "approve-student";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -114,6 +115,20 @@ class ApiService {
 
     public static async deleteStudent(student: User): Promise<boolean> {
         let response: Response = await fetch(ApiService.deleteStudentEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                student
+            }),
+        });
+
+        return await response.json();
+    }
+
+    public static async approveStudent(student: User): Promise<boolean> {
+        let response: Response = await fetch(ApiService.approveStudentEndpoint, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
