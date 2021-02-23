@@ -2,7 +2,7 @@ import {UserResponse} from "../model/UserResponse";
 import {RegisterResponse} from "../model/RegisterResponse";
 import {User} from "../model/User";
 import {UpdateUserResponse} from "../model/UpdateUserResponse";
-import {AddUpdateStudentResponse} from "../model/AddUpdateStudentResponse";
+import {AddUpdateApproveStudentResponse} from "../model/AddUpdateApproveStudentResponse";
 
 class ApiService {
     private static endpoint: string = "http://localhost:4000/"
@@ -88,7 +88,7 @@ class ApiService {
         return await response.json();
     }
 
-    public static async addUpdateStudent(student: User): Promise<AddUpdateStudentResponse> {
+    public static async addUpdateStudent(student: User): Promise<AddUpdateApproveStudentResponse> {
         let response: Response = await fetch(ApiService.addUpdateStudentEndpoint, {
             method: "POST",
             headers: {
@@ -127,7 +127,7 @@ class ApiService {
         return await response.json();
     }
 
-    public static async approveStudent(student: User): Promise<boolean> {
+    public static async approveStudent(student: User): Promise<AddUpdateApproveStudentResponse> {
         let response: Response = await fetch(ApiService.approveStudentEndpoint, {
             method: "POST",
             headers: {

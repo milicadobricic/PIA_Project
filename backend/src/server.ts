@@ -199,16 +199,16 @@ router.route('/approve-student').post(async (req, res) => {
         await generateStudentInfo(user);
         user.studentInfo.approved = true;
 
-        const result = await userModel.updateOne({id: user.id}, user);
-        if (result.ok) {
+        try {
+            await userModel.updateOne({id: user.id}, user);
             res.json({
                 success: true,
-                message: 'User updated!',
+                message: `Approved student with username '${user.username}' and password '${user.password}'!`,
             });
-        } else {
+        } catch (e) {
             res.json({
                 success: false,
-                message: 'An error occurred!',
+                message: 'Error while approving user!',
             });
         }
     }

@@ -16,18 +16,25 @@ import {
 import ApiService from "../../services/ApiService";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {ThumbUp} from "@material-ui/icons";
+import {AddUpdateApproveStudentResponse} from "../../model/AddUpdateApproveStudentResponse";
 
 type PageState = {
     students?: User[],
     studentToDelete?: User,
-    studentToApprove?: User
+    studentToApprove?: User,
+    message?: string,
+    success: boolean
 }
 
 class StudentListPage extends React.Component<any, PageState> {
     public constructor(props: any) {
         super(props);
         this.state = {
-            students: undefined
+            students: undefined,
+            studentToDelete: undefined,
+            studentToApprove: undefined,
+            message: undefined,
+            success: true
         };
     }
 
@@ -83,11 +90,13 @@ class StudentListPage extends React.Component<any, PageState> {
             studentToApprove: undefined,
         })
 
-        await ApiService.approveStudent(studentToApprove as User);
+        let response: AddUpdateApproveStudentResponse = await ApiService.approveStudent(studentToApprove as User);
 
         let students = await ApiService.students();
         this.setState({
-            students
+            students,
+            message: response.message,
+            success: response.success,
         })
     };
 
@@ -158,6 +167,13 @@ class StudentListPage extends React.Component<any, PageState> {
                         <Button variant="contained" onClick={() => this.setState({studentToApprove: undefined})}>Cancel</Button>
                     </DialogActions>
                 </Dialog>
+                {
+                    this.state.message && <div>
+                        <Alert severity={this.state.success ? "info" : "error"}>
+                            {this.state.message}
+                        </Alert>
+                    </div>
+                }
             </div>
         )
     }
