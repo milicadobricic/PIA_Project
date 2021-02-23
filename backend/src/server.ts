@@ -273,5 +273,45 @@ router.route('/students').get(async (req, res) => {
     res.json(students);
 });
 
+router.route('/add-update-employee').post(async (req, res) => {
+    const employee: User = req.body.employee;
+    const id = employee.id;
+
+    const userModel = getModelForClass(User);
+    const user = await userModel.findOne({id});
+    if (user === null) {
+        try {
+            employee.password = Guid.create().toString();
+            employee.isValidPassword = false;
+            employee.userType = 'employee';
+
+            await userModel.create(employee);
+            res.json({
+                success: true,
+                message: `Created employee with username '${employee.username}' and password '${employee.password}'!`,
+            });
+        } catch (e) {
+            res.json({
+                success: false,
+                message: 'Error while creating user!',
+            });
+        }
+    } else {
+        employee.password = user.password;
+        const result = await userModel.updateOne({id}, employee);
+        if (result.ok) {
+            res.json({
+                success: true,
+                message: 'User updated!',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'An error occurred!',
+            });
+        }
+    }
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));
