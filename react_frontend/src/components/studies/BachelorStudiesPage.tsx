@@ -1,7 +1,6 @@
 import * as React from "react";
 import ApiService from "../../services/ApiService";
 import {Class} from "../../model/Class";
-import {Typography} from "@material-ui/core";
 
 type PageState = {
     classes?: Array<Class>
