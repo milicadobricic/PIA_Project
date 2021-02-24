@@ -324,8 +324,8 @@ router.route('/add-update-employee').post(async (req, res) => {
     }
 });
 
-router.route('/classes').post(async (req, res) => {
-    const department: string = req.body.department;
+router.route('/classes').get(async (req, res) => {
+    const department: string = req.query.department;
     const classModel = getModelForClass(Class);
 
     const classes = await classModel.find({'codes.department': department});

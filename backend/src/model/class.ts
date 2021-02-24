@@ -36,6 +36,6 @@ export class Class {
     @prop({required: true})
     public goal!: string;
 
-    @prop({required: true})
-    public description!: string;
+    @prop({default: null})
+    public description?: string;
 }

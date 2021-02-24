@@ -3,6 +3,7 @@ import {RegisterResponse} from "../model/RegisterResponse";
 import {User} from "../model/User";
 import {UpdateUserResponse} from "../model/UpdateUserResponse";
 import {AddUpdateApproveResponse} from "../model/AddUpdateApproveResponse";
+import {Class} from "../model/Class";
 
 class ApiService {
     private static endpoint: string = "http://localhost:4000/"
@@ -17,6 +18,7 @@ class ApiService {
     private static deleteUserEndpoint: string = ApiService.endpoint + "delete-user";
     private static approveStudentEndpoint: string = ApiService.endpoint + "approve-student";
     private static addUpdateEmployeeEndpoint: string = ApiService.endpoint + "add-update-employee";
+    private static classesEndpoint: string = ApiService.endpoint + "classes";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -151,6 +153,17 @@ class ApiService {
             body: JSON.stringify({
                 employee
             }),
+        });
+
+        return await response.json();
+    }
+
+    public static async classes(department: string): Promise<Class[]> {
+        let response: Response = await fetch(ApiService.classesEndpoint + "/?department=" + department, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
         return await response.json();
