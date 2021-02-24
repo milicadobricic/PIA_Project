@@ -68,7 +68,7 @@ class StudentListPage extends React.Component<any, PageState> {
             studentToDelete: undefined,
         })
 
-        await ApiService.deleteStudent(studentToDelete as User);
+        await ApiService.deleteUser(studentToDelete as User);
 
         let students = await ApiService.students();
         this.setState({

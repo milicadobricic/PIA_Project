@@ -174,9 +174,9 @@ router.route('/update-user').post(async (req, res) => {
     }
 });
 
-router.route('/delete-student').post(async (req, res) => {
-    const student: User = req.body.student;
-    const id = student.id;
+router.route('/delete-user').post(async (req, res) => {
+    const user: User = req.body.user;
+    const id = user.id;
 
     const userModel = getModelForClass(User);
 

@@ -14,7 +14,7 @@ class ApiService {
     private static updateUserEndpoint: string = ApiService.endpoint + "update-user";
     private static addUpdateStudentEndpoint: string = ApiService.endpoint + "add-update-student";
     private static studentsEndpoint: string = ApiService.endpoint + "students";
-    private static deleteStudentEndpoint: string = ApiService.endpoint + "delete-student";
+    private static deleteUserEndpoint: string = ApiService.endpoint + "delete-user";
     private static approveStudentEndpoint: string = ApiService.endpoint + "approve-student";
     private static addUpdateEmployeeEndpoint: string = ApiService.endpoint + "add-update-employee";
 
@@ -114,14 +114,14 @@ class ApiService {
         return await response.json();
     }
 
-    public static async deleteStudent(student: User): Promise<boolean> {
-        let response: Response = await fetch(ApiService.deleteStudentEndpoint, {
+    public static async deleteUser(user: User): Promise<boolean> {
+        let response: Response = await fetch(ApiService.deleteUserEndpoint, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                student
+                user
             }),
         });
 
