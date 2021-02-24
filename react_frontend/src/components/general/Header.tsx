@@ -26,7 +26,7 @@ class Header extends React.Component<any, any>{
                     <Button href="/" color="inherit">
                         Bachelor studies
                     </Button>
-                    <Button href="/" color="inherit">
+                    <Button href="/master" color="inherit">
                         Master studies
                     </Button>
                     <Button href="/" color="inherit">

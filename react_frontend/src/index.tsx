@@ -20,12 +20,14 @@ import EditStudentPage from "./components/admin/EditStudentPage";
 import AddEmployeePage from "./components/admin/AddEmployeePage";
 import EmployeeListPage from "./components/admin/EmployeeListPage";
 import EditEmployeePage from "./components/admin/EditEmployeePage";
+import MasterStudiesPage from "./components/studies/MasterStudiesPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
     {path: '/register', component: RegisterPage},
     {path: '/employees', component: EmployeesPage},
     {path: '/user/:username', component: UserProfilePage},
+    {path: '/master', component: MasterStudiesPage},
     {path: '/not-found', component: NotFound},
 ]
 
