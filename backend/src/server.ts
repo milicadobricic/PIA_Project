@@ -5,6 +5,7 @@ import express from 'express';
 import {Guid} from 'guid-typescript';
 import mongoose from 'mongoose';
 import {Class} from './model/class';
+import {Notification} from './model/notification';
 import {User} from './model/user';
 
 const app = express();
@@ -330,6 +331,42 @@ router.route('/classes').get(async (req, res) => {
 
     const classes = await classModel.find({'codes.group': group.toUpperCase()});
     res.json(classes);
+});
+
+router.route('/add-update-notification').post(async (req, res) => {
+    const notification: Notification = req.body.notification;
+    const id = notification.id;
+
+    const notificationModel = getModelForClass(Notification);
+    const found = await notificationModel.findOne({id});
+
+    if (found) {
+        const result = await notificationModel.updateOne({id}, notification);
+        if (result.ok) {
+            res.json({
+                success: true,
+                message: 'Notification updated!',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'An error occurred!',
+            });
+        }
+    } else {
+        try {
+            await notificationModel.create(notification);
+            res.json({
+                success: true,
+                message: `Created notification with title '${notification.title}'!`,
+            });
+        } catch (e) {
+            res.json({
+                success: false,
+                message: 'Error while creating notification!',
+            });
+        }
+    }
 });
 
 app.use('/', router);
