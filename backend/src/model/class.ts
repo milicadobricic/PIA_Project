@@ -8,6 +8,9 @@ export class Code {
     public year!: number;
 
     @prop({required: true})
+    public semester!: number;
+
+    @prop({required: true})
     public subject!: string;
 }
 
