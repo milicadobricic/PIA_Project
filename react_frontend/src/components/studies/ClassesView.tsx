@@ -9,7 +9,7 @@ type ViewProps = {
 
 class ClassesView extends React.Component<ViewProps, any> {
     public getCode(classInfo: Class): string {
-        let code = classInfo.codes.filter(c => c.department === this.props.group)[0];
+        let code = classInfo.codes.filter(c => c.group === this.props.group.toUpperCase())[0];
         return `${code.department}${code.year}${code.subject}`;
     }
 
