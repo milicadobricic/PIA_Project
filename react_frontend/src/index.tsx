@@ -29,7 +29,7 @@ const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/employees', component: EmployeesPage},
     {path: '/user/:username', component: UserProfilePage},
     {path: '/master', component: MasterStudiesPage},
-    {path: '/bachelor/:department', component: BachelorStudiesPage},
+    {path: '/bachelor/:group', component: BachelorStudiesPage},
     {path: '/not-found', component: NotFound},
 ]
 

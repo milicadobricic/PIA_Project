@@ -1,5 +1,6 @@
 export class Code {
     public department!: string;
+    public group!: string;
     public year!: number;
     public semester!: number;
     public subject!: string;
