@@ -5,6 +5,9 @@ export class Code {
     public department!: string;
 
     @prop({required: true})
+    public group!: string;
+
+    @prop({required: true})
     public year!: number;
 
     @prop({required: true})

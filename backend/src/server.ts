@@ -328,7 +328,7 @@ router.route('/classes').get(async (req, res) => {
     const department: string = req.query.department;
     const classModel = getModelForClass(Class);
 
-    const classes = await classModel.find({'codes.department': department});
+    const classes = await classModel.find({'codes.department': department.toUpperCase()});
     res.json(classes);
 });
 

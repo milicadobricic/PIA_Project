@@ -17,7 +17,7 @@ class BachelorStudiesPage extends React.Component<any, PageState> {
 
     public async componentDidMount() {//others
         let department = this.props.match.params.department;
-        let classes = await ApiService.classes(department.toUpperCase());
+        let classes = await ApiService.classes(department);
         this.setState({
             classes
         });
