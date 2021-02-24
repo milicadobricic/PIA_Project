@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import {Guid} from 'guid-typescript';
 import mongoose from 'mongoose';
+import {Class} from './model/class';
 import {User} from './model/user';
 
 const app = express();
@@ -321,6 +322,14 @@ router.route('/add-update-employee').post(async (req, res) => {
             });
         }
     }
+});
+
+router.route('/classes').post(async (req, res) => {
+    const department: string = req.body.department;
+    const classModel = getModelForClass(Class);
+
+    const classes = await classModel.find({'codes.department': department});
+    res.json(classes);
 });
 
 app.use('/', router);
