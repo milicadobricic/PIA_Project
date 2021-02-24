@@ -1,11 +1,35 @@
 import * as React from 'react';
-import {AppBar, Box, Button, Toolbar} from "@material-ui/core";
+import {AppBar, Box, Button, Menu, MenuItem, Toolbar} from "@material-ui/core";
 import LocalStorageService from "../../services/LocalStorageService";
 
-class Header extends React.Component<any, any>{
+type HeaderState = {
+    menuOpen: boolean
+}
+
+class Header extends React.Component<any, HeaderState>{
+    public constructor(props: any) {
+        super(props);
+        this.state = {
+            menuOpen: false
+        };
+    }
+
+
     public onLogOut = () => {
         LocalStorageService.removeUser();
         window.location.href = "/";
+    }
+
+    public onOpenMenu = () => {
+        this.setState({
+            menuOpen: true
+        })
+    }
+
+    public onCloseMenu = () => {
+        this.setState({
+            menuOpen: false
+        })
     }
 
     public render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
@@ -23,9 +47,24 @@ class Header extends React.Component<any, any>{
                     <Button href="/" color="inherit">
                         News
                     </Button>
-                    <Button href="/" color="inherit">
+                    <Button id="menu-button" color="inherit" onClick={this.onOpenMenu}>
                         Bachelor studies
                     </Button>
+                    <Menu
+                        open={this.state.menuOpen}
+                        anchorEl={document.getElementById("menu-button")}
+                        onClose={this.onCloseMenu}
+                    >
+                        <MenuItem onClick={() => window.location.href = "/bachelor/si"}>
+                            Software engineering
+                        </MenuItem>
+                        <MenuItem onClick={() => window.location.href = "/bachelor/is"}>
+                            Computer Engineering and Information Theory
+                        </MenuItem>
+                        <MenuItem onClick={() => window.location.href = "/bachelor/others"}>
+                            Other departments
+                        </MenuItem>
+                    </Menu>
                     <Button href="/master" color="inherit">
                         Master studies
                     </Button>
