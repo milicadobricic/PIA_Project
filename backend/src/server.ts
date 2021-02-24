@@ -405,5 +405,14 @@ router.route('/add-update-class').post(async (req, res) => {
     }
 });
 
+router.route('/class').get(async (req, res) => {
+    const id = req.query.id;
+    const classModel = getModelForClass(Class);
+    let classInfo: Class = null;
+    classInfo = await classModel.findOne({id});
+
+    res.json(classInfo);
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));
