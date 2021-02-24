@@ -19,6 +19,7 @@ class ApiService {
     private static approveStudentEndpoint: string = ApiService.endpoint + "approve-student";
     private static addUpdateEmployeeEndpoint: string = ApiService.endpoint + "add-update-employee";
     private static classesEndpoint: string = ApiService.endpoint + "classes";
+    private static addUpdateClassEndpoint: string = ApiService.endpoint + "add-update-class";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -164,6 +165,20 @@ class ApiService {
             headers: {
                 'Content-Type': 'application/json',
             },
+        });
+
+        return await response.json();
+    }
+
+    public static async addUpdateClass(classInfo: Class): Promise<AddUpdateApproveResponse> {
+        let response: Response = await fetch(ApiService.addUpdateClassEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "class": classInfo
+            }),
         });
 
         return await response.json();

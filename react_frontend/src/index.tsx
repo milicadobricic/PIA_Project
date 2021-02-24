@@ -22,6 +22,7 @@ import EmployeeListPage from "./components/admin/EmployeeListPage";
 import EditEmployeePage from "./components/admin/EditEmployeePage";
 import MasterStudiesPage from "./components/studies/MasterStudiesPage";
 import BachelorStudiesPage from "./components/studies/BachelorStudiesPage";
+import CreateClassPage from "./components/admin/CreateClassPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -46,6 +47,7 @@ const adminRoutes: Array<{path: string, component: any}> = [
     {path: '/register-employee', component: AddEmployeePage},
     {path: '/manage-employees', component: EmployeeListPage},
     {path: '/employee/:id', component: EditEmployeePage},
+    {path: '/create-class', component: CreateClassPage},
 ]
 
 ReactDOM.render(

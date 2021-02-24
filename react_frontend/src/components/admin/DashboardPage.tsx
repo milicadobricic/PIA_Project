@@ -92,7 +92,7 @@ class DashboardPage extends React.Component<any, any> {
                                         <TableBody>
                                             <TableRow>
                                                 <TableCell>
-                                                    <Button href="/" fullWidth={true} variant="contained">
+                                                    <Button href="/create-class" fullWidth={true} variant="contained">
                                                         Create class
                                                     </Button>
                                                 </TableCell>

@@ -369,5 +369,41 @@ router.route('/add-update-notification').post(async (req, res) => {
     }
 });
 
+router.route('/add-update-class').post(async (req, res) => {
+    const classInfo: Class = req.body.class;
+    const id = classInfo.id;
+
+    const classModel = getModelForClass(Class);
+    const found = await classModel.findOne({id});
+
+    if (found) {
+        const result = await classModel.updateOne({id}, classInfo);
+        if (result.ok) {
+            res.json({
+                success: true,
+                message: 'Class updated!',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'An error occurred!',
+            });
+        }
+    } else {
+        try {
+            await classModel.create(classInfo);
+            res.json({
+                success: true,
+                message: `Created class with name '${classInfo.name}'!`,
+            });
+        } catch (e) {
+            res.json({
+                success: false,
+                message: 'Error while creating class!',
+            });
+        }
+    }
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));
