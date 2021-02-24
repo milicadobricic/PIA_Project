@@ -58,7 +58,7 @@ class Header extends React.Component<any, HeaderState>{
                         <MenuItem onClick={() => window.location.href = "/bachelor/si"}>
                             Software engineering
                         </MenuItem>
-                        <MenuItem onClick={() => window.location.href = "/bachelor/is"}>
+                        <MenuItem onClick={() => window.location.href = "/bachelor/ir"}>
                             Computer Engineering and Information Theory
                         </MenuItem>
                         <MenuItem onClick={() => window.location.href = "/bachelor/others"}>

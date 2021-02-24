@@ -158,8 +158,8 @@ class ApiService {
         return await response.json();
     }
 
-    public static async classes(department: string): Promise<Class[]> {
-        let response: Response = await fetch(ApiService.classesEndpoint + "/?department=" + department, {
+    public static async classes(group: string): Promise<Class[]> {
+        let response: Response = await fetch(ApiService.classesEndpoint + "/?group=" + group, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',

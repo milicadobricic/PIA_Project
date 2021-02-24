@@ -325,10 +325,10 @@ router.route('/add-update-employee').post(async (req, res) => {
 });
 
 router.route('/classes').get(async (req, res) => {
-    const department: string = req.query.department;
+    const group: string = req.query.group;
     const classModel = getModelForClass(Class);
 
-    const classes = await classModel.find({'codes.department': department.toUpperCase()});
+    const classes = await classModel.find({'codes.group': group.toUpperCase()});
     res.json(classes);
 });
 
