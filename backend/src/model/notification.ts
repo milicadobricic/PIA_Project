@@ -15,4 +15,7 @@ export class Notification {
 
     @prop({required: true})
     public classes: string[];
+
+    @prop({required: true})
+    public userId: string;
 }

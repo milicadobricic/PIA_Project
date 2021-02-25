@@ -3,5 +3,6 @@ export class Notification {
     public title!: string;
     public content!: string;
     public date!: string;
-    public classes!: Array<string>
+    public classes!: Array<string>;
+    public userId!: string;
 }

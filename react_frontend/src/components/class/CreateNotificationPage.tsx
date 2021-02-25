@@ -3,6 +3,7 @@ import {Notification} from "../../model/Notification";
 import {Guid} from "guid-typescript";
 import {Box, Grid, Paper, Typography} from "@material-ui/core";
 import AddUpdateNotification from "./AddUpdateNotification";
+import LocalStorageService from "../../services/LocalStorageService";
 
 class CreateNotificationPage extends React.Component<any, any>{
     public render() {
@@ -11,7 +12,8 @@ class CreateNotificationPage extends React.Component<any, any>{
             title: '',
             content: '',
             date: new Date().toISOString().slice(0, 10),
-            classes: []
+            classes: [],
+            userId: LocalStorageService.getUser().id
         };
 
         return (
