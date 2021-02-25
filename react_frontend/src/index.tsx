@@ -24,8 +24,8 @@ import MasterStudiesPage from "./components/studies/MasterStudiesPage";
 import BachelorStudiesPage from "./components/studies/BachelorStudiesPage";
 import CreateClassPage from "./components/admin/CreateClassPage";
 import EditClassPage from "./components/admin/EditClassPage";
-import ClassList from "./components/admin/ClassList";
 import ClassListPage from "./components/admin/ClassListPage";
+import ClassInfoPage from "./components/class/ClassInfoPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -40,6 +40,7 @@ const generalRoutes: Array<{path: string, component: any}> = [
 const loggedInRoutes: Array<{path: string, component: any}> = [
     {path: '/profile', component: CurrentUserProfilePage},
     {path: '/edit-profile', component: EditProfilePage},
+    {path: '/class/info/:id', component: ClassInfoPage},
 ]
 
 const adminRoutes: Array<{path: string, component: any}> = [
