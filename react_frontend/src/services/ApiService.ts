@@ -5,6 +5,7 @@ import {UpdateUserResponse} from "../model/UpdateUserResponse";
 import {AddUpdateApproveResponse} from "../model/AddUpdateApproveResponse";
 import {Class} from "../model/Class";
 import {Notification} from "../model/Notification";
+import {Group} from "../model/Group";
 
 class ApiService {
     private static endpoint: string = "http://localhost:4000/"
@@ -28,6 +29,7 @@ class ApiService {
     private static notificationsEndpoint: string = ApiService.endpoint + "notifications";
     private static deleteNotificationEndpoint: string = ApiService.endpoint + "delete-notification";
     private static updatePasswordEndpoint: string = ApiService.endpoint + "update-password";
+    private static groupsEndpoint: string = ApiService.endpoint + "groups";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -286,6 +288,22 @@ class ApiService {
                 oldPassword,
                 password
             }),
+        });
+
+        return await response.json();
+    }
+
+    public static async groups(userId?: string): Promise<Array<Group>> {
+        let api: string = ApiService.groupsEndpoint;
+        if (userId) {
+            api += "/?userId=" + userId;
+        }
+
+        let response: Response = await fetch(api, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
         return await response.json();

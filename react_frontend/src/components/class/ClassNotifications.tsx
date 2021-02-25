@@ -55,7 +55,7 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
                 {
                     this.props.notifications.length === 0 && <Alert severity="info">
                         <Typography>
-                            No notifications for this class
+                            No notifications
                         </Typography>
                     </Alert>
                 }

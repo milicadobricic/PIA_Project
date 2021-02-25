@@ -97,6 +97,7 @@ class AddUpdateClass extends React.Component<ClassProps, ClassState> {
 
         if (key === "semester") {
             classInfo.codes[index].year = Math.floor((event.target.value - 1) / 2) + 1;
+            classInfo.codes[index].semester = parseInt(event.target.value);
         }
 
         this.setState({

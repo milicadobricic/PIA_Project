@@ -5,6 +5,7 @@ import {Alert} from "@material-ui/lab";
 import {Box, IconButton, Paper, Typography} from "@material-ui/core";
 import {AddCircleOutlined} from "@material-ui/icons";
 import ClassNotifications from "../class/ClassNotifications";
+import LocalStorageService from "../../services/LocalStorageService";
 
 type PageState = {
     notifications?: Array<Notification>
@@ -24,8 +25,9 @@ class CurrentUserNotificationsPage extends React.Component<any, PageState>{
     }
 
     public refresh = async () => {
-        let classes = await ApiService.classes();
-        let notifications: Array<Notification> = await ApiService.notifications(classes.map(c => c.id));
+        let groups = await ApiService.groups(LocalStorageService.getUser().id);
+        let classes = groups.map(group => group.classId);
+        let notifications: Array<Notification> = await ApiService.notifications(classes);
         this.setState({
             notifications
         });
