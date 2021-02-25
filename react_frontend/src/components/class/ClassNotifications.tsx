@@ -23,14 +23,24 @@ type NotificationsProps = {
 
 type NotificationsState = {
     notificationToDelete?: Notification,
+    classIds: Array<string>
 }
 
 class ClassNotifications extends React.Component<NotificationsProps, NotificationsState> {
     public constructor(props: NotificationsProps) {
         super(props);
         this.state = {
-            notificationToDelete: undefined
+            notificationToDelete: undefined,
+            classIds: []
         };
+    }
+
+    public async componentDidMount() {
+        let groups = await ApiService.groups(LocalStorageService.getUser().id);
+        let classIds = groups.map(group => group.classId);
+        this.setState({
+            classIds
+        });
     }
 
     public onDelete = (notification: Notification) => {
@@ -69,9 +79,12 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
                                 <Box p={3}>
                                     <Typography variant="h5" align="center">
                                         {notification.title} ({notification.date})
-                                        <IconButton href={"/edit-notification/" + notification.id}>
-                                            <Edit />
-                                        </IconButton>
+                                        {
+                                            notification.classes.some(classId => this.state.classIds.includes(classId)) &&
+                                            <IconButton href={"/edit-notification/" + notification.id}>
+                                                <Edit />
+                                            </IconButton>
+                                        }
                                         {
                                             notification.userId === userId && <IconButton onClick={() => this.onDelete(notification)}>
                                                 <Delete />
