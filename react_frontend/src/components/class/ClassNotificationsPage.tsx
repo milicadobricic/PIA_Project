@@ -3,6 +3,7 @@ import {Notification} from "../../model/Notification";
 import ApiService from "../../services/ApiService";
 import {Alert} from "@material-ui/lab";
 import {Box, Divider, Paper, Typography} from "@material-ui/core";
+import ClassTabs from "./ClassTabs";
 
 type PageState = {
     notifications?: Array<Notification>
@@ -38,23 +39,40 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
 
         return(
             <div>
-                {
-                    this.state.notifications.map(notification =>
-                        <Box p={3} className="profile_page">
-                            <Paper elevation={5}>
-                                <Box p={3}>
-                                    <Typography variant="h5" align="center">
-                                        {notification.title} ({notification.date})
+                <Box p={3} className="class_page">
+                    <Paper elevation={5}>
+                        <Box p={3}>
+                            <ClassTabs index={1} classId={this.props.match.params.id} />
+                            <Typography variant="h3" align="center">
+                                Notifications
+                            </Typography>
+                            {
+                                this.state.notifications.length === 0 && <Alert severity="info">
+                                    <Typography>
+                                        No notifications for this class
                                     </Typography>
-                                    <Divider />
-                                    <Typography align="center">
-                                        {notification.content}
-                                    </Typography>
-                                </Box>
-                            </Paper>
+                                </Alert>
+                            }
+                            {
+                                this.state.notifications.map(notification =>
+                                    <Box p={3} className="class_notification">
+                                        <Paper elevation={5}>
+                                            <Box p={3}>
+                                                <Typography variant="h5" align="center">
+                                                    {notification.title} ({notification.date})
+                                                </Typography>
+                                                <Divider />
+                                                <Typography align="center">
+                                                    {notification.content}
+                                                </Typography>
+                                            </Box>
+                                        </Paper>
+                                    </Box>
+                                )
+                            }
                         </Box>
-                    )
-                }
+                    </Paper>
+                </Box>
             </div>
         )
     }

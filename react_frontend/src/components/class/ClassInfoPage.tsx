@@ -2,7 +2,18 @@ import * as React from "react";
 import ApiService from "../../services/ApiService";
 import {Class, Code} from "../../model/Class";
 import {Alert} from "@material-ui/lab";
-import {Box, Button, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
+import {
+    Box,
+    Button,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    Typography
+} from "@material-ui/core";
+import ClassTabs from "./ClassTabs";
 
 type PageState = {
     classInfo?: Class
@@ -51,9 +62,10 @@ class ClassInfoPage extends React.Component<any, PageState> {
         }
 
         return (
-            <Box p={3} className="profile_page">
+            <Box p={3} className="class_page">
                 <Paper elevation={5}>
                     <Box p={3}>
+                        <ClassTabs index={0} classId={this.state.classInfo.id} />
                         <Table size="small">
                             <TableHead>
                                 <TableRow>

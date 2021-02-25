@@ -46,3 +46,16 @@
   max-width: 1000px;
   margin: auto;
 }
+
+$class_page_width: 1000px;
+$class_notification_width: $class_page_width - 100px;
+
+.class_page {
+  max-width: $class_page_width;
+  margin: auto;
+}
+
+.class_notification {
+  max-width: $class_notification_width;
+  margin: auto;
+}
