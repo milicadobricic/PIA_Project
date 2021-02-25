@@ -61,7 +61,7 @@ class ClassesView extends React.Component<ViewProps, any> {
                         this.props.classes.map((classInfo: Class) =>
                             <TableRow>
                                 <TableCell>
-                                    <Link href="/">
+                                    <Link href={"/class/info/" + classInfo.id}>
                                         <Typography>
                                             {this.getCode(classInfo)}
                                         </Typography>
