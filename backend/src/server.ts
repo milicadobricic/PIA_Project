@@ -6,6 +6,7 @@ import {Guid} from 'guid-typescript';
 import mongoose from 'mongoose';
 import {Class} from './model/class';
 import {Notification} from './model/notification';
+import {Group} from './model/group';
 import {User} from './model/user';
 
 const app = express();
@@ -491,6 +492,56 @@ router.route('/update-password').post(async (req, res) => {
             message: 'An error occurred!',
         });
     }
+});
+
+router.route('/add-update-teaching').post(async (req, res) => {
+    const group: Group = req.body.group;
+    const id = group.id;
+
+    const groupModel = getModelForClass(Group);
+    const found = await groupModel.findOne({id});
+
+    if (found) {
+        const result = await groupModel.updateOne({id}, group);
+        if (result.ok) {
+            res.json({
+                success: true,
+                message: 'Group updated!',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'An error occurred!',
+            });
+        }
+    } else {
+        try {
+            await groupModel.create(group);
+            res.json({
+                success: true,
+                message: `Created group with name '${group.name}'!`,
+            });
+        } catch (e) {
+            res.json({
+                success: false,
+                message: 'Error while creating group!',
+            });
+        }
+    }
+});
+
+router.route('/groups').get(async (req, res) => {
+    const userId: any = req.query.userId;
+    const groupModel = getModelForClass(Group);
+
+    let groups;
+    if (userId) {
+        groups = await groupModel.find({userId});
+    } else {
+        groups = await groupModel.find({});
+    }
+
+    res.json(groups);
 });
 
 app.use('/', router);
