@@ -26,7 +26,6 @@ import CreateClassPage from "./components/admin/CreateClassPage";
 import EditClassPage from "./components/admin/EditClassPage";
 import ClassListPage from "./components/admin/ClassListPage";
 import ClassInfoPage from "./components/class/ClassInfoPage";
-import AddUpdateNotification from "./components/class/AddUpdateNotification";
 import CreateNotificationPage from "./components/class/CreateNotificationPage";
 import EditNotificationPage from "./components/class/EditNotificationPage";
 import ClassNotificationsPage from "./components/class/ClassNotificationsPage";
