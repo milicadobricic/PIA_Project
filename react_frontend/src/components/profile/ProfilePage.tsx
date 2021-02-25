@@ -1,6 +1,6 @@
 import * as React from "react";
 import {
-    Box, Button, Paper,
+    Box, Button, Grid, Paper,
     Table,
     TableBody,
     TableCell,
@@ -80,9 +80,18 @@ class ProfilePage extends React.Component<PageProps, any>{
                         </Table>
                         {
                             user.employeeInfo && user.id === currentUser?.id && <div>
-                                <Button href="/edit-profile" variant="contained" fullWidth={true}>
-                                    Edit profile
-                                </Button>
+                                <Grid container direction="row">
+                                    <Grid item md={6}>
+                                        <Button href="/edit-profile" variant="contained" fullWidth={true}>
+                                            Edit profile
+                                        </Button>
+                                    </Grid>
+                                    <Grid item md={6}>
+                                        <Button href="/my-notifications" variant="contained" fullWidth={true}>
+                                            My notifications
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </div>
                         }
                     </Box>

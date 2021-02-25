@@ -3,15 +3,14 @@ import {Notification} from "../../model/Notification";
 import ApiService from "../../services/ApiService";
 import {Alert} from "@material-ui/lab";
 import {Box, IconButton, Paper, Typography} from "@material-ui/core";
-import ClassTabs from "./ClassTabs";
 import {AddCircleOutlined} from "@material-ui/icons";
-import ClassNotifications from "./ClassNotifications";
+import ClassNotifications from "../class/ClassNotifications";
 
 type PageState = {
     notifications?: Array<Notification>
 }
 
-class ClassNotificationsPage extends React.Component<any, PageState>{
+class CurrentUserNotificationsPage extends React.Component<any, PageState>{
     public constructor(props: any) {
         super(props);
 
@@ -21,8 +20,8 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
     }
 
     public async componentDidMount() {
-        let classId = this.props.match.params.id;
-        let notifications: Array<Notification> = await ApiService.notifications(classId);
+        let classes = await ApiService.classes();
+        let notifications: Array<Notification> = await ApiService.notifications(classes.map(c => c.id));
         this.setState({
             notifications
         });
@@ -41,10 +40,9 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
 
         return(
             <div>
-                <Box p={3} className="class_page">
+                <Box p={3} className="profile_page">
                     <Paper elevation={5}>
                         <Box p={3}>
-                            <ClassTabs index={1} classId={this.props.match.params.id} />
                             <Typography variant="h3" align="center">
                                 Notifications
                                 <IconButton href="/create-notification">
@@ -60,4 +58,4 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
     }
 }
 
-export default ClassNotificationsPage;
+export default CurrentUserNotificationsPage;
