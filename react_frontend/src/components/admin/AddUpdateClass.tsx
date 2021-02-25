@@ -113,9 +113,8 @@ class AddUpdateClass extends React.Component<ClassProps, ClassState> {
     }
 
     public onConfirm = async () => {
-        console.log()
         let response = await ApiService.addUpdateClass(this.state.classInfo);
-        console.log(response);
+
         this.setState({
             success: response.success,
             message: response.message

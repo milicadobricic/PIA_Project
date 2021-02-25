@@ -11,7 +11,7 @@ export class Notification {
     public content: string;
 
     @prop({required: true})
-    public date: Date;
+    public date: string;
 
     @prop({required: true})
     public classes: string[];

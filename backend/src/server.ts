@@ -434,5 +434,14 @@ router.route('/delete-class').post(async (req, res) => {
     }
 });
 
+router.route('/notification').get(async (req, res) => {
+    const id = req.query.id;
+    const notificationModel = getModelForClass(Notification);
+    let notification: Notification = null;
+    notification = await notificationModel.findOne({id});
+
+    res.json(notification);
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));

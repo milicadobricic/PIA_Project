@@ -2,6 +2,6 @@ export class Notification {
     public id!: string;
     public title!: string;
     public content!: string;
-    public date!: Date;
+    public date!: string;
     public classes!: Array<string>
 }

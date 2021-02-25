@@ -4,6 +4,7 @@ import {User} from "../model/User";
 import {UpdateUserResponse} from "../model/UpdateUserResponse";
 import {AddUpdateApproveResponse} from "../model/AddUpdateApproveResponse";
 import {Class} from "../model/Class";
+import {Notification} from "../model/Notification";
 
 class ApiService {
     private static endpoint: string = "http://localhost:4000/"
@@ -22,6 +23,8 @@ class ApiService {
     private static addUpdateClassEndpoint: string = ApiService.endpoint + "add-update-class";
     private static classEndpoint: string = ApiService.endpoint + "class";
     private static deleteClassEndpoint: string = ApiService.endpoint + "delete-class";
+    private static addUpdateNotificationEndpoint: string = ApiService.endpoint + "add-update-notification";
+    private static notificationEndpoint: string = ApiService.endpoint + "notification";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -211,6 +214,31 @@ class ApiService {
             body: JSON.stringify({
                 class: classInfo
             }),
+        });
+
+        return await response.json();
+    }
+
+    public static async addUpdateNotification(notification: Notification): Promise<AddUpdateApproveResponse> {
+        let response: Response = await fetch(ApiService.addUpdateNotificationEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                notification
+            }),
+        });
+
+        return await response.json();
+    }
+
+    public static async notification(id: string): Promise<Notification> {
+        let response: Response = await fetch(ApiService.notificationEndpoint + "/?id=" + id, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
         return await response.json();
