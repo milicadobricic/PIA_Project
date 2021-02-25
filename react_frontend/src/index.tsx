@@ -30,6 +30,7 @@ import CreateNotificationPage from "./components/class/CreateNotificationPage";
 import EditNotificationPage from "./components/class/EditNotificationPage";
 import ClassNotificationsPage from "./components/class/ClassNotificationsPage";
 import CurrentUserNotificationsPage from "./components/profile/CurrentUserNotificationsPage";
+import UpdatePasswordPage from "./components/profile/UpdatePasswordPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -49,6 +50,7 @@ const loggedInRoutes: Array<{path: string, component: any}> = [
     {path: '/create-notification', component: CreateNotificationPage},
     {path: '/my-notifications', component: CurrentUserNotificationsPage},
     {path: '/edit-notification/:id', component: EditNotificationPage},
+    {path: '/update-password', component: UpdatePasswordPage},
 ]
 
 const adminRoutes: Array<{path: string, component: any}> = [

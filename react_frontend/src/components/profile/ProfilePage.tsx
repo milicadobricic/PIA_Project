@@ -54,6 +54,8 @@ class ProfilePage extends React.Component<PageProps, any>{
             infoList.push({label: "Biography", value: user.employeeInfo?.biography});
         }
 
+        let gridSize : 4 | 12 = user.employeeInfo && user.id === currentUser?.id ? 4 : 12;
+
         return (
             <Box p={3} className="profile_page">
                 <Paper elevation={5}>
@@ -78,22 +80,29 @@ class ProfilePage extends React.Component<PageProps, any>{
                                 }
                             </TableBody>
                         </Table>
-                        {
-                            user.employeeInfo && user.id === currentUser?.id && <div>
-                                <Grid container direction="row">
-                                    <Grid item md={6}>
+                        <Grid container direction="row">
+                            {
+                                user.id === currentUser?.id && <Grid item md={gridSize}>
+                                    <Button href="/update-password" variant="contained" fullWidth={true}>
+                                        Update password
+                                    </Button>
+                                </Grid>
+                            }
+                            {
+                                user.employeeInfo && user.id === currentUser?.id && <Grid item md={gridSize}>
                                         <Button href="/edit-profile" variant="contained" fullWidth={true}>
                                             Edit profile
                                         </Button>
                                     </Grid>
-                                    <Grid item md={6}>
-                                        <Button href="/my-notifications" variant="contained" fullWidth={true}>
-                                            My notifications
-                                        </Button>
-                                    </Grid>
+                            }
+                            {
+                                user.employeeInfo && user.id === currentUser?.id && <Grid item md={gridSize}>
+                                    <Button href="/my-notifications" variant="contained" fullWidth={true}>
+                                        My notifications
+                                    </Button>
                                 </Grid>
-                            </div>
-                        }
+                            }
+                        </Grid>
                     </Box>
                 </Paper>
             </Box>
