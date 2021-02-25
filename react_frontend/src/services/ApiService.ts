@@ -27,6 +27,7 @@ class ApiService {
     private static notificationEndpoint: string = ApiService.endpoint + "notification";
     private static notificationsEndpoint: string = ApiService.endpoint + "notifications";
     private static deleteNotificationEndpoint: string = ApiService.endpoint + "delete-notification";
+    private static updatePasswordEndpoint: string = ApiService.endpoint + "update-password";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -268,6 +269,22 @@ class ApiService {
             },
             body: JSON.stringify({
                 notification
+            }),
+        });
+
+        return await response.json();
+    }
+
+    public static async updatePassword(userId: string, oldPassword: string, password: string): Promise<AddUpdateApproveResponse> {
+        let response: Response = await fetch(ApiService.updatePasswordEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userId,
+                oldPassword,
+                password
             }),
         });
 

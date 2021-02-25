@@ -414,8 +414,7 @@ router.route('/add-update-class').post(async (req, res) => {
 router.route('/class').get(async (req, res) => {
     const id = req.query.id;
     const classModel = getModelForClass(Class);
-    let classInfo: Class = null;
-    classInfo = await classModel.findOne({id});
+    const classInfo: Class = await classModel.findOne({id});
 
     res.json(classInfo);
 });
@@ -437,8 +436,7 @@ router.route('/delete-class').post(async (req, res) => {
 router.route('/notification').get(async (req, res) => {
     const id = req.query.id;
     const notificationModel = getModelForClass(Notification);
-    let notification: Notification = null;
-    notification = await notificationModel.findOne({id});
+    const notification: Notification = await notificationModel.findOne({id});
 
     res.json(notification);
 });
@@ -463,6 +461,35 @@ router.route('/delete-notification').post(async (req, res) => {
         res.json(true);
     } else {
         res.json(false);
+    }
+});
+
+router.route('/update-password').post(async (req, res) => {
+    const userId = req.body.userId;
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.password;
+
+    const userModel = getModelForClass(User);
+    const result = await userModel.updateOne(
+        {id: userId, password: oldPassword},
+        {password: newPassword, isValidPassword: true});
+
+    console.log(result);
+    if (result.ok && result.nModified === 1) {
+        res.json({
+            success: true,
+            message: 'Password updated!',
+        });
+    } else if (result.ok) {
+        res.json({
+            success: false,
+            message: 'Invalid password!',
+        });
+    } else {
+        res.json({
+            success: false,
+            message: 'An error occurred!',
+        });
     }
 });
 
