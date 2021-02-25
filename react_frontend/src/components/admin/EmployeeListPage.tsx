@@ -74,7 +74,7 @@ class EmployeeListPage extends React.Component<any, PageState> {
             )
         }
 
-        if (!this.state.employees) {
+        if (this.state.employees.length === 0) {
             return (
                 <Alert severity="info">
                     <Typography>
