@@ -5,6 +5,7 @@ import {Button, Table, TableBody, TableCell, TableRow, TextField,} from "@materi
 import {Alert} from "@material-ui/lab";
 import Select from 'react-select';
 import {Class} from "../../model/Class";
+import LocalStorageService from "../../services/LocalStorageService";
 
 type NotificationProps = {
     notification: Notification,
@@ -31,6 +32,9 @@ class AddUpdateNotification extends React.Component<NotificationProps, Notificat
 
     public async componentDidMount() {
         let classes: Array<Class> = await ApiService.classes();
+        let groups = await ApiService.groups(LocalStorageService.getUser().id);
+        let classIds = groups.map(group => group.classId);
+        classes = classes.filter(classInfo => classIds.includes(classInfo.id));
 
         this.setState({
             notification: this.props.notification,
