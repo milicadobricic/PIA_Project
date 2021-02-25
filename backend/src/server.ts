@@ -443,5 +443,14 @@ router.route('/notification').get(async (req, res) => {
     res.json(notification);
 });
 
+router.route('/notifications').post(async (req, res) => {
+    const classIds: string[] = req.body.classIds;
+    const notificationModel = getModelForClass(Notification);
+
+    const notifications = await notificationModel.find({classes: {$in: classIds}});
+
+    res.json(notifications);
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));

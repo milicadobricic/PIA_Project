@@ -25,6 +25,7 @@ class ApiService {
     private static deleteClassEndpoint: string = ApiService.endpoint + "delete-class";
     private static addUpdateNotificationEndpoint: string = ApiService.endpoint + "add-update-notification";
     private static notificationEndpoint: string = ApiService.endpoint + "notification";
+    private static notificationsEndpoint: string = ApiService.endpoint + "notifications";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -239,6 +240,20 @@ class ApiService {
             headers: {
                 'Content-Type': 'application/json',
             },
+        });
+
+        return await response.json();
+    }
+
+    public static async notifications(classIds: Array<string>): Promise<Array<Notification>> {
+        let response: Response = await fetch(ApiService.notificationsEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                classIds
+            }),
         });
 
         return await response.json();
