@@ -14,6 +14,7 @@ import {
 import {Alert} from "@material-ui/lab";
 import {Delete, Edit} from "@material-ui/icons";
 import ApiService from "../../services/ApiService";
+import LocalStorageService from "../../services/LocalStorageService";
 
 type NotificationsProps = {
     notifications: Array<Notification>,
@@ -50,6 +51,8 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
     }
 
     public render() {
+        let userId = LocalStorageService.getUser().id;
+
         return (
             <div>
                 {
@@ -69,9 +72,11 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
                                         <IconButton href={"/edit-notification/" + notification.id}>
                                             <Edit />
                                         </IconButton>
-                                        <IconButton onClick={() => this.onDelete(notification)}>
-                                            <Delete />
-                                        </IconButton>
+                                        {
+                                            notification.userId === userId && <IconButton onClick={() => this.onDelete(notification)}>
+                                                <Delete />
+                                            </IconButton>
+                                        }
                                     </Typography>
                                     <Divider />
                                     <Typography align="center">
