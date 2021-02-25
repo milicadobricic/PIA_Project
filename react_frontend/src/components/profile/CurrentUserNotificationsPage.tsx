@@ -20,6 +20,10 @@ class CurrentUserNotificationsPage extends React.Component<any, PageState>{
     }
 
     public async componentDidMount() {
+        await this.refresh();
+    }
+
+    public refresh = async () => {
         let classes = await ApiService.classes();
         let notifications: Array<Notification> = await ApiService.notifications(classes.map(c => c.id));
         this.setState({
@@ -49,7 +53,7 @@ class CurrentUserNotificationsPage extends React.Component<any, PageState>{
                                     <AddCircleOutlined />
                                 </IconButton>
                             </Typography>
-                            <ClassNotifications notifications={this.state.notifications} />
+                            <ClassNotifications notifications={this.state.notifications} onDelete={this.refresh} />
                         </Box>
                     </Paper>
                 </Box>

@@ -21,6 +21,10 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
     }
 
     public async componentDidMount() {
+        await this.refresh();
+    }
+
+    public refresh = async () => {
         let classId = this.props.match.params.id;
         let notifications: Array<Notification> = await ApiService.notifications(classId);
         this.setState({
@@ -51,7 +55,7 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
                                     <AddCircleOutlined />
                                 </IconButton>
                             </Typography>
-                            <ClassNotifications notifications={this.state.notifications} />
+                            <ClassNotifications notifications={this.state.notifications} onDelete={this.refresh} />
                         </Box>
                     </Paper>
                 </Box>

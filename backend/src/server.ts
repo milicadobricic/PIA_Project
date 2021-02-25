@@ -452,5 +452,19 @@ router.route('/notifications').post(async (req, res) => {
     res.json(notifications);
 });
 
+router.route('/delete-notification').post(async (req, res) => {
+    const notification: Notification = req.body.notification;
+    const id = notification.id;
+
+    const notificationModel = getModelForClass(Notification);
+
+    const result = await notificationModel.deleteOne({id});
+    if (result.ok) {
+        res.json(true);
+    } else {
+        res.json(false);
+    }
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));
