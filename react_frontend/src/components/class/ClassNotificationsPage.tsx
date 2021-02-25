@@ -2,8 +2,9 @@ import * as React from "react";
 import {Notification} from "../../model/Notification";
 import ApiService from "../../services/ApiService";
 import {Alert} from "@material-ui/lab";
-import {Box, Divider, Paper, Typography} from "@material-ui/core";
+import {Box, Divider, IconButton, Paper, Typography} from "@material-ui/core";
 import ClassTabs from "./ClassTabs";
+import {AddCircleOutlined} from "@material-ui/icons";
 
 type PageState = {
     notifications?: Array<Notification>
@@ -45,6 +46,9 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
                             <ClassTabs index={1} classId={this.props.match.params.id} />
                             <Typography variant="h3" align="center">
                                 Notifications
+                                <IconButton href="/create-notification">
+                                    <AddCircleOutlined />
+                                </IconButton>
                             </Typography>
                             {
                                 this.state.notifications.length === 0 && <Alert severity="info">

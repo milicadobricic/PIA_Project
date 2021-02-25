@@ -447,7 +447,7 @@ router.route('/notifications').post(async (req, res) => {
     const classIds: string[] = req.body.classIds;
     const notificationModel = getModelForClass(Notification);
 
-    const notifications = await notificationModel.find({classes: {$in: classIds}});
+    const notifications = await notificationModel.find({classes: {$in: classIds}}).sort({date: -1});
 
     res.json(notifications);
 });
