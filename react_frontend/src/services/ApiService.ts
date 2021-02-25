@@ -21,6 +21,7 @@ class ApiService {
     private static classesEndpoint: string = ApiService.endpoint + "classes";
     private static addUpdateClassEndpoint: string = ApiService.endpoint + "add-update-class";
     private static classEndpoint: string = ApiService.endpoint + "class";
+    private static deleteClassEndpoint: string = ApiService.endpoint + "delete-class";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -160,8 +161,13 @@ class ApiService {
         return await response.json();
     }
 
-    public static async classes(group: string): Promise<Class[]> {
-        let response: Response = await fetch(ApiService.classesEndpoint + "/?group=" + group, {
+    public static async classes(group?: string): Promise<Class[]> {
+        let api: string = ApiService.classesEndpoint;
+        if (group) {
+            api += "/?group=" + group;
+        }
+
+        let response: Response = await fetch(api, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -191,6 +197,20 @@ class ApiService {
             headers: {
                 'Content-Type': 'application/json',
             },
+        });
+
+        return await response.json();
+    }
+
+    public static async deleteClass(classInfo: Class): Promise<boolean> {
+        let response: Response = await fetch(ApiService.deleteClassEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                class: classInfo
+            }),
         });
 
         return await response.json();

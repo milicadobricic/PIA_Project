@@ -99,15 +99,8 @@ class DashboardPage extends React.Component<any, any> {
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>
-                                                    <Button href="/" fullWidth={true} variant="contained">
-                                                        Edit class
-                                                    </Button>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>
-                                                    <Button href="/" fullWidth={true} variant="contained">
-                                                        Remove class
+                                                    <Button href="/manage-classes" fullWidth={true} variant="contained">
+                                                        Edit/Remove class
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>

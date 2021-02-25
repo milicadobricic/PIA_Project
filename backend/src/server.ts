@@ -326,10 +326,16 @@ router.route('/add-update-employee').post(async (req, res) => {
 });
 
 router.route('/classes').get(async (req, res) => {
-    const group: string = req.query.group;
+    const group: any = req.query.group;
     const classModel = getModelForClass(Class);
 
-    const classes = await classModel.find({'codes.group': group.toUpperCase()});
+    let classes;
+    if (group) {
+        classes = await classModel.find({'codes.group': group.toUpperCase()});
+    } else {
+        classes = await classModel.find({});
+    }
+
     res.json(classes);
 });
 
@@ -412,6 +418,20 @@ router.route('/class').get(async (req, res) => {
     classInfo = await classModel.findOne({id});
 
     res.json(classInfo);
+});
+
+router.route('/delete-class').post(async (req, res) => {
+    const classInfo: Class = req.body.class;
+    const id = classInfo.id;
+
+    const classModel = getModelForClass(Class);
+
+    const result = await classModel.deleteOne({id});
+    if (result.ok) {
+        res.json(true);
+    } else {
+        res.json(false);
+    }
 });
 
 app.use('/', router);

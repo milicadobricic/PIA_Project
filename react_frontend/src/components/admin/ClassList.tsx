@@ -55,7 +55,7 @@ class ClassList extends React.Component<PageProps, PageState> {
     };
 
     public render() {
-        if (!this.props.classes) {
+        if (this.props.classes.length === 0) {
             return (
                 <Alert severity="info">
                     <Typography>
@@ -84,7 +84,7 @@ class ClassList extends React.Component<PageProps, PageState> {
                                                     <DeleteIcon/>
                                                 </IconButton>
                                             }
-                                            <Link href={"/class/" + classInfo.id}>
+                                            <Link href={"/edit-class/" + classInfo.id}>
                                                 {classInfo.name}
                                             </Link>
                                         </Typography>
