@@ -199,14 +199,11 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
                                     Uploaded date
                                 </Typography>
                             </TableCell>
-                            {
-                                (this.state.classIds.includes(this.props.classId) || LocalStorageService.getUser().userType === "admin") &&
-                                <TableCell>
-                                    <Typography>
-                                        Actions
-                                    </Typography>
-                                </TableCell>
-                            }
+                            <TableCell>
+                                <Typography>
+                                    Actions
+                                </Typography>
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     {
@@ -231,17 +228,17 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
                                     {file.date}
                                 </Typography>
                             </TableCell>
-                            {
-                                (this.state.classIds.includes(this.props.classId) || LocalStorageService.getUser().userType === "admin") &&
-                                <TableCell>
-                                    <IconButton onClick={() => this.onDownload(file)}>
-                                        <GetApp />
-                                    </IconButton>
+                            <TableCell>
+                                <IconButton onClick={() => this.onDownload(file)}>
+                                    <GetApp />
+                                </IconButton>
+                                {
+                                    (this.state.classIds.includes(this.props.classId) || LocalStorageService.getUser().userType === "admin") &&
                                     <IconButton>
                                         <Delete onClick={() => this.onDelete(file)}/>
                                     </IconButton>
-                                </TableCell>
-                            }
+                                }
+                            </TableCell>
                         </TableRow>)
                     }
                 </Table>
