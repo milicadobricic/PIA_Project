@@ -549,7 +549,7 @@ router.route('/groups').get(async (req, res) => {
 });
 
 router.route('/add-update-attendance').post(async (req, res) => {
-    const attendance: Attendance = req.body.group;
+    const attendance: Attendance = req.body.attendance;
     const id = attendance.id;
 
     const attendanceModel = getModelForClass(Attendance);

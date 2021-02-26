@@ -35,6 +35,7 @@ import LecturesPage from "./components/class/LecturesPage";
 import ExercisesPage from "./components/class/ExercisesPage";
 import ExamsPage from "./components/class/ExamsPage";
 import ContactPage from "./components/general/ContactPage";
+import AddStudentsToClassesPage from "./components/admin/AddStudentsToClassesPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -72,6 +73,7 @@ const adminRoutes: Array<{path: string, component: any}> = [
     {path: '/employee/:id', component: EditEmployeePage},
     {path: '/create-class', component: CreateClassPage},
     {path: '/manage-classes', component: ClassListPage},
+    {path: '/student-classes', component: AddStudentsToClassesPage},
 ]
 
 ReactDOM.render(
