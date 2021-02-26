@@ -34,6 +34,7 @@ import UpdatePasswordPage from "./components/profile/UpdatePasswordPage";
 import LecturesPage from "./components/class/LecturesPage";
 import ExercisesPage from "./components/class/ExercisesPage";
 import ExamsPage from "./components/class/ExamsPage";
+import ContactPage from "./components/general/ContactPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -42,6 +43,7 @@ const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/user/:username', component: UserProfilePage},
     {path: '/master', component: MasterStudiesPage},
     {path: '/bachelor/:group', component: BachelorStudiesPage},
+    {path: '/contact', component: ContactPage},
     {path: '/not-found', component: NotFound},
 ]
 

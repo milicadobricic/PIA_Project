@@ -44,9 +44,6 @@ class Header extends React.Component<any, HeaderState>{
                     <Button href="/employees" color="inherit">
                         Employees
                     </Button>
-                    <Button href="/" color="inherit">
-                        News
-                    </Button>
                     <Button id="menu-button" color="inherit" onClick={this.onOpenMenu}>
                         Bachelor studies
                     </Button>
@@ -69,12 +66,9 @@ class Header extends React.Component<any, HeaderState>{
                         Master studies
                     </Button>
                     <Button href="/" color="inherit">
-                        Projects
-                    </Button>
-                    <Button href="/" color="inherit">
                         Science
                     </Button>
-                    <Button href="/" color="inherit">
+                    <Button href="/contact" color="inherit">
                         Contact
                     </Button>
                     {
