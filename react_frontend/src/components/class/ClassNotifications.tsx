@@ -80,13 +80,15 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
                                     <Typography variant="h5" align="center">
                                         {notification.title} ({notification.date})
                                         {
-                                            notification.classes.some(classId => this.state.classIds.includes(classId)) &&
+                                            (notification.classes.some(classId => this.state.classIds.includes(classId)) || LocalStorageService.getUser().userType === "admin")
+                                            &&
                                             <IconButton href={"/edit-notification/" + notification.id}>
                                                 <Edit />
                                             </IconButton>
                                         }
                                         {
-                                            notification.userId === userId && <IconButton onClick={() => this.onDelete(notification)}>
+                                            (notification.userId === userId || LocalStorageService.getUser().userType === "admin") &&
+                                            <IconButton onClick={() => this.onDelete(notification)}>
                                                 <Delete />
                                             </IconButton>
                                         }
