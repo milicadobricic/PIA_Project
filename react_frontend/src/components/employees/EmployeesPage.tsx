@@ -3,23 +3,34 @@ import {User} from "../../model/User";
 import {Alert} from "@material-ui/lab";
 import {Box, Link, Paper, Table, TableCell, TableRow, Typography} from "@material-ui/core";
 import ApiService from "../../services/ApiService";
+import {Group} from "../../model/Group";
+import {Class} from "../../model/Class";
 
 type PageState = {
-    users?: Array<User>
+    users?: Array<User>,
+    groups?: Array<Group>,
+    classes?: Array<Class>,
 }
 
 class EmployeesPage extends React.Component<any, PageState> {
     public constructor(props: any) {
         super(props);
         this.state = {
-            users: undefined
+            users: undefined,
+            groups: undefined,
+            classes: undefined,
         };
     }
 
     public async componentDidMount() {
-        let employees = await ApiService.employees();
+        let employeesPromise = ApiService.employees();
+        let groupsPromise = ApiService.groups();
+        let classesPromise = ApiService.classes();
+        let [employees, groups, classes] = await Promise.all([employeesPromise, groupsPromise, classesPromise]);
         this.setState({
-            users: employees
+            users: employees,
+            groups,
+            classes
         });
     }
 
@@ -33,6 +44,15 @@ class EmployeesPage extends React.Component<any, PageState> {
                 </Alert>
             )
         }
+
+        let classesPerId: {[classId: string]: Class} = {}
+        this.state.classes?.forEach(c => {
+            classesPerId[c.id] = c;
+        })
+
+        let classIdsPerUser: {[userId: string]: Set<string>} = {};
+        this.state.users.forEach(u => classIdsPerUser[u.id] = new Set<string>());
+        this.state.groups?.forEach(g => classIdsPerUser[g.userId].add(g.classId));
 
         return (
             <Box p={3} className="employees_page">
@@ -48,6 +68,7 @@ class EmployeesPage extends React.Component<any, PageState> {
                                                     {user.firstName}&nbsp;{user.lastName}
                                                 </Link>
                                                 ,&nbsp;{user.employeeInfo?.title}
+                                                , Classes: {Array.from(classIdsPerUser[user.id]).map(classId => classesPerId[classId].name).join(", ") || "No classes"}
                                             </Typography>
                                         </TableCell>
                                     </TableRow>
