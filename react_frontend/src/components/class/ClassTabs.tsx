@@ -16,6 +16,7 @@ class ClassTabs extends React.Component<TabsProps, any>{
                 <Tab label="Lectures" href={"/class/lectures/" + this.props.classId} />
                 <Tab label="Exercises" href={"/class/exercises/" + this.props.classId} />
                 <Tab label="Exams" href={"/class/exams/" + this.props.classId} />
+                <Tab label="Practical lessons" href={"/class/practical/" + this.props.classId} />
             </Tabs>
         )
     }
