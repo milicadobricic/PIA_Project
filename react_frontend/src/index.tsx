@@ -55,6 +55,7 @@ const loggedInRoutes: Array<{path: string, component: any}> = [
     {path: '/class/lectures/:id', component: LecturesPage},
     {path: '/class/exercises/:id', component: ExercisesPage},
     {path: '/class/exams/:id', component: ExamsPage},
+    {path: '/edit-class/:id', component: EditClassPage},
     {path: '/create-notification', component: CreateNotificationPage},
     {path: '/my-notifications', component: CurrentUserNotificationsPage},
     {path: '/edit-notification/:id', component: EditNotificationPage},
@@ -70,7 +71,6 @@ const adminRoutes: Array<{path: string, component: any}> = [
     {path: '/manage-employees', component: EmployeeListPage},
     {path: '/employee/:id', component: EditEmployeePage},
     {path: '/create-class', component: CreateClassPage},
-    {path: '/edit-class/:id', component: EditClassPage},
     {path: '/manage-classes', component: ClassListPage},
 ]
 
