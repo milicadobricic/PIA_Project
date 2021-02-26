@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppBar, Box, Button, Menu, MenuItem, Toolbar} from "@material-ui/core";
+import {AppBar, Avatar, Box, Button, Menu, MenuItem, Toolbar} from "@material-ui/core";
 import LocalStorageService from "../../services/LocalStorageService";
 
 type HeaderState = {
@@ -98,7 +98,8 @@ class Header extends React.Component<any, HeaderState>{
                             :
                             <div>
                                 <Button href="/profile" color="inherit">
-                                    Profile
+                                    {user.employeeInfo?.profilePicture && <Avatar src={user.employeeInfo.profilePicture} /> }
+                                    &nbsp;Profile
                                 </Button>
                                 <Button color="inherit" onClick={this.onLogOut}>
                                     Log out
