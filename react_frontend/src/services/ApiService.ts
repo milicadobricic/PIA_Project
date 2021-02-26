@@ -35,6 +35,7 @@ class ApiService {
     private static attendancesEndpoint: string = ApiService.endpoint + "attendances";
     private static filesEndpoint: string = ApiService.endpoint + "files";
     private static addUpdateFileEndpoint: string = ApiService.endpoint + "add-update-file";
+    private static deleteFileEndpoint: string = ApiService.endpoint + "delete-file";
 
     public static async login(username: string, password: string): Promise<UserResponse> {
         let response: Response = await fetch(ApiService.loginEndpoint, {
@@ -344,6 +345,20 @@ class ApiService {
 
     public static async addUpdateFile(file: File): Promise<AddUpdateApproveResponse> {
         let response: Response = await fetch(ApiService.addUpdateFileEndpoint, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                file
+            }),
+        });
+
+        return await response.json();
+    }
+
+    public static async deleteFile(file: File): Promise<boolean> {
+        let response: Response = await fetch(ApiService.deleteFileEndpoint, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

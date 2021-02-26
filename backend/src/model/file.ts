@@ -23,6 +23,9 @@ export class File {
     public size: string;
 
     @prop({required: true})
+    public mimeType: string;
+
+    @prop({required: true})
     public professorName: string;
 
     @prop({required: true})

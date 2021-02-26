@@ -644,5 +644,19 @@ router.route('/files').get(async (req, res) => {
     res.json(groups);
 });
 
+router.route('/delete-file').post(async (req, res) => {
+    const file: File = req.body.file;
+    const id = file.id;
+
+    const fileModel = getModelForClass(File);
+
+    const result = await fileModel.deleteOne({id});
+    if (result.ok) {
+        res.json(true);
+    } else {
+        res.json(false);
+    }
+});
+
 app.use('/', router);
 app.listen(4000, () => console.log(`Express server running on port 4000`));

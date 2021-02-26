@@ -1,8 +1,18 @@
 import * as React from "react";
 import {File} from "../../model/FIle";
 import ApiService from "../../services/ApiService";
-import {CircularProgress, IconButton, Table, TableCell, TableRow, Typography} from "@material-ui/core";
-import {Add} from "@material-ui/icons";
+import {
+    Button,
+    CircularProgress,
+    Dialog, DialogActions, DialogContent,
+    IconButton,
+    Table,
+    TableCell,
+    TableHead,
+    TableRow,
+    Typography
+} from "@material-ui/core";
+import {Add, Delete, GetApp} from "@material-ui/icons";
 import {Guid} from "guid-typescript";
 import LocalStorageService from "../../services/LocalStorageService";
 import {Alert} from "@material-ui/lab";
@@ -16,12 +26,14 @@ type MaterialsState = {
     files: Array<File>,
     success: boolean,
     message?: string,
-    uploading: boolean
+    uploading: boolean,
+    fileToDelete?: File
 }
 
 class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
     private fileName: string = "";
     private fileSize: number = 0;
+    private fileType: string = "text/plain";
 
     public constructor(props: any) {
         super(props);
@@ -30,6 +42,7 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
             success: true,
             message: undefined,
             uploading: false,
+            fileToDelete: undefined
         }
     }
 
@@ -69,6 +82,7 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
             type: this.props.type,
             date: new Date().toISOString().slice(0, 10),
             size: this.getHumanReadableSize(this.fileSize),
+            mimeType: this.fileType,
             professorName: `${user.firstName} ${user.lastName}`,
             professorId: user.id,
             optionalText: undefined
@@ -97,12 +111,43 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
 
                 this.fileName = file.name;
                 this.fileSize = file.size;
+                this.fileType = file.type;
 
                 let reader = new FileReader();
                 reader.readAsBinaryString(file);
                 reader.onload = this.onFinishedUpload;
             }
         }
+    }
+
+    public onDownload = (file: File) => {
+        let content = atob(file.content);
+        let blob = new Blob([content], {type: file.mimeType});
+        let a = document.createElement('a');
+        a.download = file.name;
+        a.href = window.URL.createObjectURL(blob);
+        a.textContent = "Download ready";
+        a.hidden = true;
+        a.click();
+    }
+
+    public onDelete = (file: File) => {
+        this.setState({
+            fileToDelete: file
+        })
+    }
+
+    public onDeleteConfirm = async () => {
+        let fileToDelete: File = this.state.fileToDelete as File;
+        this.setState({
+            fileToDelete: undefined
+        })
+        await ApiService.deleteFile(fileToDelete);
+
+        let files = await ApiService.files(this.props.classId, this.props.type);
+        this.setState({
+            files
+        });
     }
 
     public render() {
@@ -123,10 +168,64 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
                     }
                 </Typography>
                 <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>
+                                <Typography>
+                                    File name
+                                </Typography>
+                            </TableCell>
+                            <TableCell>
+                                <Typography>
+                                    File size
+                                </Typography>
+                            </TableCell>
+                            <TableCell>
+                                <Typography>
+                                    Uploaded by
+                                </Typography>
+                            </TableCell>
+                            <TableCell>
+                                <Typography>
+                                    Uploaded date
+                                </Typography>
+                            </TableCell>
+                            <TableCell>
+                                <Typography>
+                                    Actions
+                                </Typography>
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
                     {
                         this.state.files.map(file => <TableRow>
                             <TableCell>
-                                {file.name}
+                                <Typography>
+                                    {file.name}
+                                </Typography>
+                            </TableCell>
+                            <TableCell>
+                                <Typography>
+                                    {file.size}
+                                </Typography>
+                            </TableCell>
+                            <TableCell>
+                                <Typography>
+                                    {file.professorName}
+                                </Typography>
+                            </TableCell>
+                            <TableCell>
+                                <Typography>
+                                    {file.date}
+                                </Typography>
+                            </TableCell>
+                            <TableCell>
+                                <IconButton onClick={() => this.onDownload(file)}>
+                                    <GetApp />
+                                </IconButton>
+                                <IconButton>
+                                    <Delete onClick={() => this.onDelete(file)}/>
+                                </IconButton>
                             </TableCell>
                         </TableRow>)
                     }
@@ -136,6 +235,19 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
                         {this.state.message}
                     </Alert>
                 }
+                <Dialog open={!!this.state.fileToDelete} onClose={() => this.setState({fileToDelete: undefined})}>
+                    <DialogContent>
+                        Are you sure you want to delete file {this.state.fileToDelete?.name}?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" color="primary" onClick={this.onDeleteConfirm}>
+                            Confirm
+                        </Button>
+                        <Button variant="contained" onClick={() => this.setState({fileToDelete: undefined})}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         )
     }

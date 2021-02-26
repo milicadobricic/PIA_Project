@@ -6,6 +6,7 @@ export class File {
     public type!: string;
     public date!: string;
     public size!: string;
+    public mimeType!: string;
     public professorName!: string;
     public professorId!: string;
     public optionalText?: string;
