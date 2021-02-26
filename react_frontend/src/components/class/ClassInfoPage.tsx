@@ -14,9 +14,11 @@ import {
     Typography
 } from "@material-ui/core";
 import ClassTabs from "./ClassTabs";
+import LocalStorageService from "../../services/LocalStorageService";
 
 type PageState = {
-    classInfo?: Class
+    classInfo?: Class,
+    classIds: Array<string>
 }
 
 class ClassInfoPage extends React.Component<any, PageState> {
@@ -24,15 +26,20 @@ class ClassInfoPage extends React.Component<any, PageState> {
         super(props);
 
         this.state = {
-            classInfo: undefined
+            classInfo: undefined,
+            classIds: []
         }
     }
 
     public async componentDidMount() {
         let classId = this.props.match.params.id;
-        let classInfo: Class = await ApiService.class(classId);
+        let classInfoPromise = ApiService.class(classId);
+        let groupsPromise = ApiService.groups(LocalStorageService.getUser().id);
+        let [classInfo, groups] = await Promise.all([classInfoPromise, groupsPromise]);
+        let classIds = groups.map(g => g.classId);
         this.setState({
-            classInfo
+            classInfo,
+            classIds
         });
     }
 
@@ -41,6 +48,8 @@ class ClassInfoPage extends React.Component<any, PageState> {
     }
 
     public render() {
+        let user = LocalStorageService.getUser();
+
         let infoList: Array<{label: string, value?: any}> = [
             {label: "Status", value: this.state.classInfo?.mandatory ? "Mandatory" : "Optional"},
             {label: "Acronyms", value: this.state.classInfo?.codes.map(code => ClassInfoPage.generateAcronym(code)).join(", ")},
@@ -96,7 +105,7 @@ class ClassInfoPage extends React.Component<any, PageState> {
                             </TableBody>
                         </Table>
                         {
-                            this.state.classInfo &&
+                            this.state.classInfo && (this.state.classIds.includes(this.state.classInfo.id) || user.userType === "admin") &&
                             <div>
                                 <Button href={"/edit-class/" + this.state.classInfo.id} variant="contained" fullWidth={true}>
                                     Edit class
