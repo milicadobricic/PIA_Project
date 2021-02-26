@@ -5,7 +5,7 @@ export class EmployeeInfo {
     public biography?: string;
     public title!: string;
     public officeNumber!: string;
-    public profilePicture?: Buffer;
+    public profilePicture?: string;
 }
 
 export class StudentInfo {

@@ -86,7 +86,7 @@ class ApiService {
         return await response.json();
     }
 
-    public static async updateUser(username: string, address: string, phoneNumber: string, officeNumber: string, biography: string): Promise<UpdateUserResponse> {
+    public static async updateUser(username: string, address: string, phoneNumber: string, officeNumber: string, biography: string, profilePicture?: string): Promise<UpdateUserResponse> {
         let response: Response = await fetch(ApiService.updateUserEndpoint, {
             method: "POST",
             headers: {
@@ -98,6 +98,7 @@ class ApiService {
                 phoneNumber,
                 officeNumber,
                 biography,
+                profilePicture
             }),
         });
 

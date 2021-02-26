@@ -20,7 +20,7 @@ export class EmployeeInfo {
     public officeNumber!: string;
 
     @prop({ default: null })
-    public profilePicture?: Buffer;
+    public profilePicture?: string;
 }
 
 export class StudentInfo {

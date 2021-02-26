@@ -6,8 +6,8 @@ import {Guid} from 'guid-typescript';
 import mongoose from 'mongoose';
 import {Attendance} from './model/attendance';
 import {Class} from './model/class';
-import {Notification} from './model/notification';
 import {Group} from './model/group';
+import {Notification} from './model/notification';
 import {User} from './model/user';
 
 const app = express();
@@ -151,6 +151,7 @@ router.route('/update-user').post(async (req, res) => {
     const phoneNumber = req.body.phoneNumber;
     const officeNumber = req.body.officeNumber;
     const biography = req.body.biography;
+    const profilePicture = req.body.profilePicture;
 
     const userModel = getModelForClass(User);
     const user = await userModel.findOne({username});
@@ -159,6 +160,7 @@ router.route('/update-user').post(async (req, res) => {
     user.employeeInfo.phoneNumber = phoneNumber;
     user.employeeInfo.officeNumber = officeNumber;
     user.employeeInfo.biography = biography;
+    user.employeeInfo.profilePicture = profilePicture;
 
     const result = await userModel.updateOne({username}, {employeeInfo: user.employeeInfo});
 
