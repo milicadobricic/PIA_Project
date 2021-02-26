@@ -6,6 +6,7 @@ import {Guid} from 'guid-typescript';
 import mongoose from 'mongoose';
 import {Attendance} from './model/attendance';
 import {Class} from './model/class';
+import {File} from './model/file';
 import {Group} from './model/group';
 import {Notification} from './model/notification';
 import {User} from './model/user';
@@ -595,6 +596,52 @@ router.route('/attendances').get(async (req, res) => {
     }
 
     res.json(attendances);
+});
+
+router.route('/add-update-file').post(async (req, res) => {
+    const file: File = req.body.file;
+    const id = file.id;
+
+    const fileModel = getModelForClass(File);
+    const found = await fileModel.findOne({id});
+
+    if (found) {
+        const result = await fileModel.updateOne({id}, file);
+        if (result.ok) {
+            res.json({
+                success: true,
+                message: 'File updated!',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'An error occurred!',
+            });
+        }
+    } else {
+        try {
+            await fileModel.create(file);
+            res.json({
+                success: true,
+                message: `File saved!`,
+            });
+        } catch (e) {
+            res.json({
+                success: false,
+                message: 'Error while saving file!',
+            });
+        }
+    }
+});
+
+router.route('/files').get(async (req, res) => {
+    const classId: any = req.query.classId;
+    const type: any = req.query.type;
+    const groupModel = getModelForClass(File);
+
+    const groups = await groupModel.find({classId, type});
+
+    res.json(groups);
 });
 
 app.use('/', router);
