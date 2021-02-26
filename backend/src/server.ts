@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import {Guid} from 'guid-typescript';
 import mongoose from 'mongoose';
+import {Attendance} from './model/attendance';
 import {Class} from './model/class';
 import {Notification} from './model/notification';
 import {Group} from './model/group';
@@ -542,6 +543,56 @@ router.route('/groups').get(async (req, res) => {
     }
 
     res.json(groups);
+});
+
+router.route('/add-update-attendance').post(async (req, res) => {
+    const attendance: Attendance = req.body.group;
+    const id = attendance.id;
+
+    const attendanceModel = getModelForClass(Attendance);
+    const found = await attendanceModel.findOne({id});
+
+    if (found) {
+        const result = await attendanceModel.updateOne({id}, attendance);
+        if (result.ok) {
+            res.json({
+                success: true,
+                message: 'Attendance updated!',
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'An error occurred!',
+            });
+        }
+    } else {
+        try {
+            await attendanceModel.create(attendance);
+            res.json({
+                success: true,
+                message: `Created attendance!`,
+            });
+        } catch (e) {
+            res.json({
+                success: false,
+                message: 'Error while creating attendance!',
+            });
+        }
+    }
+});
+
+router.route('/attendances').get(async (req, res) => {
+    const userId: any = req.query.userId;
+    const attendanceModel = getModelForClass(Attendance);
+
+    let attendances;
+    if (userId) {
+        attendances = await attendanceModel.find({userId});
+    } else {
+        attendances = await attendanceModel.find({});
+    }
+
+    res.json(attendances);
 });
 
 app.use('/', router);
