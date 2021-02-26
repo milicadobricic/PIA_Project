@@ -10,7 +10,7 @@ class ExercisesPage extends React.Component<any, any> {
                 <Box p={3} className="class_page">
                     <Paper elevation={5}>
                         <Box p={3}>
-                            <ClassTabs index={3} classId={this.props.match.params.id} />
+                            <ClassTabs index={4} classId={this.props.match.params.id} />
                             <ClassMaterials classId={this.props.match.params.id} type="exercise" title="Exercises" />
                         </Box>
                     </Paper>

@@ -146,6 +146,13 @@ router.route('/users').get(async (req, res) => {
     res.json(user);
 });
 
+router.route('/all-users').get(async (req, res) => {
+    const userModel = getModelForClass(User);
+    const users: User[] = await userModel.find({});
+
+    res.json(users);
+});
+
 router.route('/update-user').post(async (req, res) => {
     const username = req.body.username;
     const address = req.body.address;
@@ -544,6 +551,15 @@ router.route('/groups').get(async (req, res) => {
     } else {
         groups = await groupModel.find({});
     }
+
+    res.json(groups);
+});
+
+router.route('/groups-by-class').get(async (req, res) => {
+    const classId: any = req.query.classId;
+    const groupModel = getModelForClass(Group);
+
+    const groups = await groupModel.find({classId});
 
     res.json(groups);
 });

@@ -16,6 +16,7 @@ class ApiService {
     private static registerEndpoint: string = ApiService.endpoint + "register";
     private static employeesEndpoint: string = ApiService.endpoint + "employees";
     private static userEndpoint: string = ApiService.endpoint + "users";
+    private static allUsersEndpoint: string = ApiService.endpoint + "all-users";
     private static updateUserEndpoint: string = ApiService.endpoint + "update-user";
     private static addUpdateStudentEndpoint: string = ApiService.endpoint + "add-update-student";
     private static studentsEndpoint: string = ApiService.endpoint + "students";
@@ -32,6 +33,7 @@ class ApiService {
     private static deleteNotificationEndpoint: string = ApiService.endpoint + "delete-notification";
     private static updatePasswordEndpoint: string = ApiService.endpoint + "update-password";
     private static groupsEndpoint: string = ApiService.endpoint + "groups";
+    private static groupsByClassEndpoint: string = ApiService.endpoint + "groups-by-class";
     private static attendancesEndpoint: string = ApiService.endpoint + "attendances";
     private static filesEndpoint: string = ApiService.endpoint + "files";
     private static addUpdateFileEndpoint: string = ApiService.endpoint + "add-update-file";
@@ -82,6 +84,17 @@ class ApiService {
 
     public static async user(username: string, id: string = ''): Promise<User> {
         let response: Response = await fetch(ApiService.userEndpoint + "/?username=" + username + '&id=' + id, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        return await response.json();
+    }
+
+    public static async allUsers(): Promise<Array<User>> {
+        let response: Response = await fetch(ApiService.allUsersEndpoint, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -308,6 +321,17 @@ class ApiService {
         }
 
         let response: Response = await fetch(api, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        return await response.json();
+    }
+
+    public static async groupsByClass(classId: string): Promise<Array<Group>> {
+        let response: Response = await fetch(ApiService.groupsByClassEndpoint + "/?classId=" + classId, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
