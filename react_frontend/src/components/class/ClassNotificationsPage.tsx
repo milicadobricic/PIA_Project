@@ -59,7 +59,7 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
                             <Typography variant="h3" align="center">
                                 Notifications
                                 {
-                                    this.state.classIds.includes(this.props.match.params.id) && <IconButton href="/create-notification">
+                                    (this.state.classIds.includes(this.props.match.params.id) || LocalStorageService.getUser().userType === "admin") && <IconButton href="/create-notification">
                                         <AddCircleOutlined />
                                     </IconButton>
                                 }
