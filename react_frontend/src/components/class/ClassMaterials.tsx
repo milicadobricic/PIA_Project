@@ -12,14 +12,15 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {Add, Delete, GetApp} from "@material-ui/icons";
+import {AddCircleOutlined, Delete, GetApp} from "@material-ui/icons";
 import {Guid} from "guid-typescript";
 import LocalStorageService from "../../services/LocalStorageService";
 import {Alert} from "@material-ui/lab";
 
 type MaterialsProps = {
     classId: string
-    type: string
+    type: string,
+    title: string,
 }
 
 type MaterialsState = {
@@ -153,11 +154,11 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
     public render() {
         return (
             <div>
-                <Typography align="center" variant="h5">
-                    Files
+                <Typography variant="h3" align="center">
+                    Lectures
                     {
                         this.state.uploading ? <CircularProgress /> : <IconButton component="label">
-                            <Add />
+                            <AddCircleOutlined />
                             <input
                                 id="materialUpload"
                                 type="file"
