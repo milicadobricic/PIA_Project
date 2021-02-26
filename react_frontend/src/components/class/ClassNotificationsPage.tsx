@@ -6,9 +6,11 @@ import {Box, IconButton, Paper, Typography} from "@material-ui/core";
 import ClassTabs from "./ClassTabs";
 import {AddCircleOutlined} from "@material-ui/icons";
 import ClassNotifications from "./ClassNotifications";
+import LocalStorageService from "../../services/LocalStorageService";
 
 type PageState = {
-    notifications?: Array<Notification>
+    notifications?: Array<Notification>,
+    classIds: Array<string>
 }
 
 class ClassNotificationsPage extends React.Component<any, PageState>{
@@ -16,7 +18,8 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
         super(props);
 
         this.state = {
-            notifications: undefined
+            notifications: undefined,
+            classIds: []
         }
     }
 
@@ -26,9 +29,13 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
 
     public refresh = async () => {
         let classId = this.props.match.params.id;
-        let notifications: Array<Notification> = await ApiService.notifications(classId);
+        let notificationsPromise = ApiService.notifications(classId);
+        let groupsPromise = ApiService.groups(LocalStorageService.getUser().id);
+        let [notifications, groups] = await Promise.all([notificationsPromise, groupsPromise]);
+        let classIds = groups.map(g => g.classId);
         this.setState({
-            notifications
+            notifications,
+            classIds
         });
     }
 
@@ -51,9 +58,11 @@ class ClassNotificationsPage extends React.Component<any, PageState>{
                             <ClassTabs index={1} classId={this.props.match.params.id} />
                             <Typography variant="h3" align="center">
                                 Notifications
-                                <IconButton href="/create-notification">
-                                    <AddCircleOutlined />
-                                </IconButton>
+                                {
+                                    this.state.classIds.includes(this.props.match.params.id) && <IconButton href="/create-notification">
+                                        <AddCircleOutlined />
+                                    </IconButton>
+                                }
                             </Typography>
                             <ClassNotifications notifications={this.state.notifications} onDelete={this.refresh} />
                         </Box>
