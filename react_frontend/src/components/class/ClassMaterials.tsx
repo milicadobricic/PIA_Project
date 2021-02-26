@@ -155,7 +155,7 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
         return (
             <div>
                 <Typography variant="h3" align="center">
-                    Lectures
+                    {this.props.title}
                     {
                         this.state.uploading ? <CircularProgress /> : <IconButton component="label">
                             <AddCircleOutlined />

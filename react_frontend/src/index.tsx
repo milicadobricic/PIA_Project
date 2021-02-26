@@ -32,6 +32,8 @@ import ClassNotificationsPage from "./components/class/ClassNotificationsPage";
 import CurrentUserNotificationsPage from "./components/profile/CurrentUserNotificationsPage";
 import UpdatePasswordPage from "./components/profile/UpdatePasswordPage";
 import LecturesPage from "./components/class/LecturesPage";
+import ExercisesPage from "./components/class/ExercisesPage";
+import ExamsPage from "./components/class/ExamsPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -49,6 +51,8 @@ const loggedInRoutes: Array<{path: string, component: any}> = [
     {path: '/class/info/:id', component: ClassInfoPage},
     {path: '/class/notifications/:id', component: ClassNotificationsPage},
     {path: '/class/lectures/:id', component: LecturesPage},
+    {path: '/class/exercises/:id', component: ExercisesPage},
+    {path: '/class/exams/:id', component: ExamsPage},
     {path: '/create-notification', component: CreateNotificationPage},
     {path: '/my-notifications', component: CurrentUserNotificationsPage},
     {path: '/edit-notification/:id', component: EditNotificationPage},
