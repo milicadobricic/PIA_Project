@@ -28,7 +28,8 @@ type MaterialsState = {
     success: boolean,
     message?: string,
     uploading: boolean,
-    fileToDelete?: File
+    fileToDelete?: File,
+    classIds: Array<string>
 }
 
 class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
@@ -43,7 +44,8 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
             success: true,
             message: undefined,
             uploading: false,
-            fileToDelete: undefined
+            fileToDelete: undefined,
+            classIds: []
         }
     }
 
@@ -52,9 +54,14 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
     }
 
     public refresh = async () => {
-        let files = await ApiService.files(this.props.classId, this.props.type);
+        let filesPromise = ApiService.files(this.props.classId, this.props.type);
+        let groupsPromise = ApiService.groups(LocalStorageService.getUser().id);
+        let [files, groups] = await Promise.all([filesPromise, groupsPromise]);
+        let classIds = groups.map(group => group.classId);
+
         this.setState({
-            files
+            files,
+            classIds
         });
     }
 
@@ -157,7 +164,8 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
                 <Typography variant="h3" align="center">
                     {this.props.title}
                     {
-                        this.state.uploading ? <CircularProgress /> : <IconButton component="label">
+                        (this.state.classIds.includes(this.props.classId) || LocalStorageService.getUser().userType === "admin")
+                        && (this.state.uploading ? <CircularProgress /> : <IconButton component="label">
                             <AddCircleOutlined />
                             <input
                                 id="materialUpload"
@@ -165,7 +173,7 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
                                 style={{ display: "none" }}
                                 onChange={this.onUpload}
                             />
-                        </IconButton>
+                        </IconButton>)
                     }
                 </Typography>
                 <Table size="small">
@@ -191,11 +199,14 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
                                     Uploaded date
                                 </Typography>
                             </TableCell>
-                            <TableCell>
-                                <Typography>
-                                    Actions
-                                </Typography>
-                            </TableCell>
+                            {
+                                (this.state.classIds.includes(this.props.classId) || LocalStorageService.getUser().userType === "admin") &&
+                                <TableCell>
+                                    <Typography>
+                                        Actions
+                                    </Typography>
+                                </TableCell>
+                            }
                         </TableRow>
                     </TableHead>
                     {
@@ -220,14 +231,17 @@ class ClassMaterials extends React.Component<MaterialsProps, MaterialsState> {
                                     {file.date}
                                 </Typography>
                             </TableCell>
-                            <TableCell>
-                                <IconButton onClick={() => this.onDownload(file)}>
-                                    <GetApp />
-                                </IconButton>
-                                <IconButton>
-                                    <Delete onClick={() => this.onDelete(file)}/>
-                                </IconButton>
-                            </TableCell>
+                            {
+                                (this.state.classIds.includes(this.props.classId) || LocalStorageService.getUser().userType === "admin") &&
+                                <TableCell>
+                                    <IconButton onClick={() => this.onDownload(file)}>
+                                        <GetApp />
+                                    </IconButton>
+                                    <IconButton>
+                                        <Delete onClick={() => this.onDelete(file)}/>
+                                    </IconButton>
+                                </TableCell>
+                            }
                         </TableRow>)
                     }
                 </Table>
