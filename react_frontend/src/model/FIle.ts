@@ -8,5 +8,5 @@ export class File {
     public size!: string;
     public professorName!: string;
     public professorId!: string;
-    public optionalText!: string;
+    public optionalText?: string;
 }

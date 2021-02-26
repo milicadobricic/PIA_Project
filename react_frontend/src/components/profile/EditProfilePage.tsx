@@ -75,13 +75,14 @@ class EditProfilePage extends React.Component<any, PageState> {
     public onUpload = () => {
         let fileInputElement = document.getElementById("fileUpload") as HTMLInputElement;
 
-        if(fileInputElement !== null && fileInputElement.files !== null)
-            if(fileInputElement.files[0]){
+        if(fileInputElement !== null && fileInputElement.files !== null) {
+            if (fileInputElement.files[0]) {
                 let file = fileInputElement.files[0];
                 let reader = new FileReader();
                 reader.readAsBinaryString(file);
                 reader.onload = this.onFinishedUpload;
             }
+        }
     }
 
     public render() {

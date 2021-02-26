@@ -14,7 +14,7 @@ import {User} from './model/user';
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser({limit: '50mb'}));
 
 mongoose.connect('mongodb://localhost:27017/pia_project').then(() => console.log('mongoose connected'));
 
