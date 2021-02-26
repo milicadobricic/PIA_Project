@@ -62,7 +62,7 @@ class ProfilePage extends React.Component<PageProps, any>{
                 <Paper elevation={5}>
                     <Box p={3}>
                         <Grid container direction="row">
-                            <Grid item md={8}>
+                            <Grid item md={this.props.user.employeeInfo ? 8 : 12}>
                                 <Table size="small">
                                     <TableBody>
                                         {
@@ -84,11 +84,14 @@ class ProfilePage extends React.Component<PageProps, any>{
                                     </TableBody>
                                 </Table>
                             </Grid>
-                            <Grid item md={4}>
-                                <div>
-                                    <img alt="" className="profile_picture" src={user.employeeInfo?.profilePicture ?? DefaultPicture}/>
-                                </div>
-                            </Grid>
+                            {
+                                this.props.user.employeeInfo &&
+                                <Grid item md={4}>
+                                    <div>
+                                        <img alt="" className="profile_picture" src={user.employeeInfo?.profilePicture ?? DefaultPicture}/>
+                                    </div>
+                                </Grid>
+                            }
                         </Grid>
                         <Grid container direction="row">
                             {
