@@ -139,7 +139,7 @@ class EditProfilePage extends React.Component<any, PageState> {
                                     <div>
                                         {
                                             this.state.profilePicture && <div>
-                                                <img className="edit_profile_image" src={this.state.profilePicture} alt="Profile picture"/>
+                                                <img className="edit_profile_image" src={this.state.profilePicture} alt=""/>
                                             </div>
                                         }
                                         <form id="uploadFormId" className="form">

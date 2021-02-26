@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import {User} from "../../model/User";
 import LocalStorageService from "../../services/LocalStorageService";
+import DefaultPicture from "../../images/default.jpg"
 
 type PageProps = {
     user: User
@@ -60,26 +61,35 @@ class ProfilePage extends React.Component<PageProps, any>{
             <Box p={3} className="profile_page">
                 <Paper elevation={5}>
                     <Box p={3}>
-                        <Table size="small">
-                            <TableBody>
-                                {
-                                    infoList.map(item =>
-                                        <TableRow>
-                                            <TableCell>
-                                                <Typography variant="h5">
-                                                    {item.label}:&nbsp;
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell>
-                                                <Typography variant="h5" color="primary">
-                                                    {item.value}
-                                                </Typography>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                }
-                            </TableBody>
-                        </Table>
+                        <Grid container direction="row">
+                            <Grid item md={8}>
+                                <Table size="small">
+                                    <TableBody>
+                                        {
+                                            infoList.map(item =>
+                                                <TableRow>
+                                                    <TableCell>
+                                                        <Typography variant="h5">
+                                                            {item.label}:&nbsp;
+                                                        </Typography>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Typography variant="h5" color="primary">
+                                                            {item.value}
+                                                        </Typography>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </Grid>
+                            <Grid item md={4}>
+                                <div>
+                                    <img alt="" className="profile_picture" src={user.employeeInfo?.profilePicture ?? DefaultPicture}/>
+                                </div>
+                            </Grid>
+                        </Grid>
                         <Grid container direction="row">
                             {
                                 user.id === currentUser?.id && <Grid item md={gridSize}>
