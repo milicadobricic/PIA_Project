@@ -44,4 +44,7 @@ export class Class {
 
     @prop({default: null})
     public description?: string;
+
+    @prop({required: true})
+    public practicalLessonsInfo!: string;
 }

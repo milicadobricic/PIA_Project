@@ -16,4 +16,5 @@ export class Class {
     public requirements!: string;
     public goal!: string;
     public description?: string;
+    public practicalLessonsInfo!: string;
 }

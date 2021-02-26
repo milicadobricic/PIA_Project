@@ -15,7 +15,8 @@ class CreateClassPage extends React.Component<any, any> {
             credits: 1,
             requirements: '',
             goal: '',
-            description: ''
+            description: '',
+            practicalLessonsInfo: ""
         };
 
         return (
