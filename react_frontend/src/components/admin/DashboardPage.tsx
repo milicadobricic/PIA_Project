@@ -111,6 +111,13 @@ class DashboardPage extends React.Component<any, any> {
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>
+                                            <TableRow>
+                                                <TableCell>
+                                                    <Button href="/add-group" fullWidth={true} variant="contained">
+                                                        Add group
+                                                    </Button>
+                                                </TableCell>
+                                            </TableRow>
                                         </TableBody>
                                     </Table>
                                 </Grid>

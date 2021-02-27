@@ -505,7 +505,7 @@ router.route('/update-password').post(async (req, res) => {
     }
 });
 
-router.route('/add-update-teaching').post(async (req, res) => {
+router.route('/add-update-group').post(async (req, res) => {
     const group: Group = req.body.group;
     const id = group.id;
 

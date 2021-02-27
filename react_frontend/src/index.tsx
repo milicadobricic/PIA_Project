@@ -39,6 +39,7 @@ import AddStudentsToClassesPage from "./components/admin/AddStudentsToClassesPag
 import LecturersPage from "./components/class/LecturersPage";
 import PracticalLessonsPage from "./components/class/PracticalLessonsPage";
 import SciencePage from "./components/general/SciencePage";
+import AddGroupPage from "./components/admin/AddGroupPage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -80,6 +81,7 @@ const adminRoutes: Array<{path: string, component: any}> = [
     {path: '/create-class', component: CreateClassPage},
     {path: '/manage-classes', component: ClassListPage},
     {path: '/student-classes', component: AddStudentsToClassesPage},
+    {path: '/add-group', component: AddGroupPage},
 ]
 
 ReactDOM.render(
