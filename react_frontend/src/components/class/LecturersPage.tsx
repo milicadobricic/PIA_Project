@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
 import ClassTabs from "./ClassTabs";
-import {Class} from "../../model/Class";
 import {Group} from "../../model/Group";
 import {User} from "../../model/User";
 import ApiService from "../../services/ApiService";
