@@ -32,10 +32,13 @@ class AddUpdateNotification extends React.Component<NotificationProps, Notificat
 
     public async componentDidMount() {
         let classes: Array<Class> = await ApiService.classes();
-        let groups = await ApiService.groups(LocalStorageService.getUser().id);
-        let classIds = groups.map(group => group.classId);
-        classes = classes.filter(classInfo => classIds.includes(classInfo.id));
 
+        if(LocalStorageService.getUser().userType !== "admin") {
+            let groups = await ApiService.groups(LocalStorageService.getUser().id);
+            let classIds = groups.map(group => group.classId);
+            classes = classes.filter(classInfo => classIds.includes(classInfo.id));
+        }
+        
         this.setState({
             notification: this.props.notification,
             classes
