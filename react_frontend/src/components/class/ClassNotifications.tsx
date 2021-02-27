@@ -12,7 +12,7 @@ import {
     Typography
 } from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
-import {Delete, Edit, GetApp} from "@material-ui/icons";
+import {Delete, Edit, GetApp, Star} from "@material-ui/icons";
 import ApiService from "../../services/ApiService";
 import LocalStorageService from "../../services/LocalStorageService";
 
@@ -98,6 +98,11 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
                             <Paper elevation={5}>
                                 <Box p={3}>
                                     <Typography variant="h5" align="center" color={this.isImportant(notification) ? "primary" : "inherit"}>
+                                        {
+                                            this.isImportant(notification) && <span>
+                                                <Star />&nbsp;
+                                            </span>
+                                        }
                                         {notification.title} ({notification.date})
                                         {
                                             (notification.classes.some(classId => this.state.classIds.includes(classId)) || LocalStorageService.getUser().userType === "admin")
