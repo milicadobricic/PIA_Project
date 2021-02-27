@@ -1,11 +1,13 @@
 import * as React from "react";
-import {Notification} from "../../model/Notification";
+import {Notification, NotificationFile} from "../../model/Notification";
 import ApiService from "../../services/ApiService";
-import {Button, Table, TableBody, TableCell, TableRow, TextField,} from "@material-ui/core";
+import {Button, IconButton, Table, TableBody, TableCell, TableRow, TextField, Typography,} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
 import Select from 'react-select';
 import {Class} from "../../model/Class";
 import LocalStorageService from "../../services/LocalStorageService";
+import {AddCircleOutlined, Delete} from "@material-ui/icons";
+import {Guid} from "guid-typescript";
 
 type NotificationProps = {
     notification: Notification,
@@ -26,7 +28,7 @@ class AddUpdateNotification extends React.Component<NotificationProps, Notificat
             notification: props.notification,
             classes: undefined,
             success: true,
-            message: undefined
+            message: undefined,
         };
     }
 
@@ -78,6 +80,47 @@ class AddUpdateNotification extends React.Component<NotificationProps, Notificat
         this.setState({
             success: response.success,
             message: response.message
+        });
+    }
+
+    public onFinishedUpload = (event: any, fileName: string, mimeType: string) => {
+        let content = event.target.result;
+        let base64 = btoa(content);
+
+        let file: NotificationFile = {
+            id: Guid.create().toString(),
+            name: fileName,
+            content: base64,
+            mimeType
+        };
+
+        let notification = this.state.notification;
+        if (!notification.files) notification.files = [];
+        notification.files.push(file);
+
+        this.setState({
+            notification
+        });
+    }
+
+    public onAddFile = () => {
+        let fileInputElement = document.getElementById("attachmentUpload") as HTMLInputElement;
+
+        if(fileInputElement !== null && fileInputElement.files !== null) {
+            if (fileInputElement.files[0]) {
+                let file = fileInputElement.files[0];
+                let reader = new FileReader();
+                reader.readAsBinaryString(file);
+                reader.onload = (event) => this.onFinishedUpload(event, file.name, file.type);
+            }
+        }
+    }
+
+    public onDeleteFile = (index: number) => {
+        let notification = this.state.notification;
+        notification.files?.splice(index, 1);
+        this.setState({
+            notification
         });
     }
 
@@ -158,6 +201,34 @@ class AddUpdateNotification extends React.Component<NotificationProps, Notificat
                                 />
                             </TableCell>
                         </TableRow>
+                        <TableRow>
+                            <Typography variant="h5">
+                                Attachments:
+                                <IconButton component="label">
+                                    <AddCircleOutlined />
+                                    <input
+                                        id="attachmentUpload"
+                                        type="file"
+                                        style={{ display: "none" }}
+                                        onChange={this.onAddFile}
+                                    />
+                                </IconButton>
+                            </Typography>
+                        </TableRow>
+                        {
+                            this.state.notification.files?.map((file, index) =>
+                                <TableRow>
+                                    <TableCell>
+                                        <Typography>
+                                            {file.name}
+                                            <IconButton onClick={() => this.onDeleteFile(index)}>
+                                                <Delete />
+                                            </IconButton>
+                                        </Typography>
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        }
                     </TableBody>
                 </Table>
 
