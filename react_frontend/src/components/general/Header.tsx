@@ -65,7 +65,7 @@ class Header extends React.Component<any, HeaderState>{
                     <Button href="/master" color="inherit">
                         Master studies
                     </Button>
-                    <Button href="/" color="inherit">
+                    <Button href="/science" color="inherit">
                         Science
                     </Button>
                     <Button href="/contact" color="inherit">

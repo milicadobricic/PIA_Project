@@ -38,6 +38,7 @@ import ContactPage from "./components/general/ContactPage";
 import AddStudentsToClassesPage from "./components/admin/AddStudentsToClassesPage";
 import LecturersPage from "./components/class/LecturersPage";
 import PracticalLessonsPage from "./components/class/PracticalLessonsPage";
+import SciencePage from "./components/general/SciencePage";
 
 const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/', component: HomePage},
@@ -47,6 +48,7 @@ const generalRoutes: Array<{path: string, component: any}> = [
     {path: '/master', component: MasterStudiesPage},
     {path: '/bachelor/:group', component: BachelorStudiesPage},
     {path: '/contact', component: ContactPage},
+    {path: '/science', component: SciencePage},
     {path: '/not-found', component: NotFound},
 ]
 
