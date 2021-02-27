@@ -71,6 +71,15 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
         a.click();
     }
 
+    public isImportant(notification: Notification) {
+        let now = new Date();
+        let then = new Date(notification.date);
+
+        let diff = now.getTime() - then.getTime();
+        const threshold = 1000 * 60 * 60 * 24 * 7;
+        return diff < threshold;
+    }
+
     public render() {
         let userId = LocalStorageService.getUser().id;
 
@@ -88,7 +97,7 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
                         <Box p={3} className="class_notification">
                             <Paper elevation={5}>
                                 <Box p={3}>
-                                    <Typography variant="h5" align="center">
+                                    <Typography variant="h5" align="center" color={this.isImportant(notification) ? "primary" : "inherit"}>
                                         {notification.title} ({notification.date})
                                         {
                                             (notification.classes.some(classId => this.state.classIds.includes(classId)) || LocalStorageService.getUser().userType === "admin")
