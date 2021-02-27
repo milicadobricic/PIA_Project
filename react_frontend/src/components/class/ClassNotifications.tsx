@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Notification} from "../../model/Notification";
+import {Notification, NotificationFile} from "../../model/Notification";
 import {
     Box,
     Button,
@@ -8,11 +8,11 @@ import {
     DialogContent,
     Divider,
     IconButton,
-    Paper,
+    Paper, Table, TableCell, TableRow,
     Typography
 } from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
-import {Delete, Edit} from "@material-ui/icons";
+import {Delete, Edit, GetApp} from "@material-ui/icons";
 import ApiService from "../../services/ApiService";
 import LocalStorageService from "../../services/LocalStorageService";
 
@@ -60,6 +60,17 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
         });
     }
 
+    public onDownloadFile = (file: NotificationFile) => {
+        let content = atob(file.content);
+        let blob = new Blob([content], {type: file.mimeType});
+        let a = document.createElement('a');
+        a.download = file.name;
+        a.href = window.URL.createObjectURL(blob);
+        a.textContent = "Download ready";
+        a.hidden = true;
+        a.click();
+    }
+
     public render() {
         let userId = LocalStorageService.getUser().id;
 
@@ -97,6 +108,21 @@ class ClassNotifications extends React.Component<NotificationsProps, Notificatio
                                     <Typography align="center">
                                         {notification.content}
                                     </Typography>
+                                    {notification.files && notification.files.length > 0 && <div>
+                                        <Divider />
+                                        <Table size="small">
+                                            {notification.files.map(file => <TableRow>
+                                                <TableCell>
+                                                    <Typography align="center">
+                                                        {file.name}
+                                                        <IconButton onClick={() => this.onDownloadFile(file)}>
+                                                            <GetApp />
+                                                        </IconButton>
+                                                    </Typography>
+                                                </TableCell>
+                                            </TableRow>)}
+                                        </Table>
+                                    </div>}
                                 </Box>
                             </Paper>
                         </Box>
